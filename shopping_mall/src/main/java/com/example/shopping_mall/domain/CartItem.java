@@ -1,9 +1,12 @@
 package com.example.shopping_mall.domain;
 
+import lombok.Getter;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "cart_item")
+@Getter
 public class CartItem {
 
     @Id @GeneratedValue
@@ -19,4 +22,13 @@ public class CartItem {
     private Item item;
 
     private int count;
+
+    public void addCount(int count) {
+        this.count += count;
+    }
+
+    public void updateCount(int count) {
+        this.count = count;
+    }
+
 }
