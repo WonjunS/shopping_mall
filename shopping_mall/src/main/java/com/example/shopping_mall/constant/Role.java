@@ -1,5 +1,5 @@
 package com.example.shopping_mall.constant;
 
-public enum MemberType {
+public enum Role {
     USER, ADMIN;
 }
