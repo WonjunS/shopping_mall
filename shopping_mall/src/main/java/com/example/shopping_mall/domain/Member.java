@@ -1,14 +1,18 @@
 package com.example.shopping_mall.domain;
 
-import com.example.shopping_mall.constant.MemberType;
+import com.example.shopping_mall.constant.Role;
 import com.example.shopping_mall.dto.JoinFormDto;
-import lombok.Getter;
+import lombok.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "member")
-@Getter
+@Getter @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Member {
 
     @Id @GeneratedValue
@@ -31,7 +35,20 @@ public class Member {
     private String zipcode;
 
     @Enumerated(EnumType.STRING)
-    private MemberType memberType;
+    private Role role;
+
+    public static Member createMember(JoinFormDto joinFormDto, PasswordEncoder passwordEncoder) {
+        return Member.builder()
+                .name(joinFormDto.getName())
+                .email(joinFormDto.getEmail())
+                .password(passwordEncoder.encode(joinFormDto.getPassword()))
+                .phone(joinFormDto.getPhone())
+                .street(joinFormDto.getStreet())
+                .city(joinFormDto.getCity())
+                .zipcode(joinFormDto.getZipcode())
+                .role(Role.USER)
+                .build();
+    }
 
     public void updatePassword(String password) {
         this.password = password;
