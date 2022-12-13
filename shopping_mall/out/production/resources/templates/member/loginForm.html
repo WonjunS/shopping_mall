@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container">
+    <div class="wrapper">
+        <form action="/member/login" method="post" role="form">
+            <p th:if="${loginErrorMsg}" class="error">UserName & Password Incorrect</p>
+            <div class="row">
+                <label th:for="email">이메일 주소</label>
+                <input type="email" name="email" placeholder="이메일 주소를 입력해주세요.">
+            </div>
+            <div class="row">
+                <label th:for="password">비밀번호</label>
+                <input type="password" name="password" placeholder="비밀번호를 입력해주세요.">
+            </div>
+            <div class="row button">
+                <input type="submit" value="Login">
+            </div>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+        </form>
+    </div>
+    <div th:replace="fragments/footer :: footer" />
+</div>
+</body>
+</html>
