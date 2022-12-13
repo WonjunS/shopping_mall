@@ -3,16 +3,13 @@ package com.example.shopping_mall.domain;
 import com.example.shopping_mall.constant.ItemSellStatus;
 import com.example.shopping_mall.dto.ItemFormDto;
 import com.example.shopping_mall.exception.OutOfStackException;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "item")
-@Getter
+@Getter @Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
