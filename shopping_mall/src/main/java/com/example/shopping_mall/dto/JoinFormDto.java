@@ -1,12 +1,11 @@
 package com.example.shopping_mall.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.validation.constraints.*;
 
-@Getter
+@Getter @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class JoinFormDto {
