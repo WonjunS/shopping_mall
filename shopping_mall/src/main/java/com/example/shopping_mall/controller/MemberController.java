@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 
@@ -25,6 +26,7 @@ public class MemberController {
     // 회원가입 페이지
     @GetMapping("/new")
     public String memberForm(Model model) {
+        model.addAttribute("joinForm", new JoinFormDto());
         return "member/joinForm";
     }
 
@@ -50,6 +52,7 @@ public class MemberController {
     }
 
     // 로그인 중 오류가 발생했을 때
+    @GetMapping("/login/fail")
     public String loginError(Model model) {
         model.addAttribute("loginErrorMsg", "아이디 또는 비밀번호를 확인해주세요.");
         return "member/loginForm";
