@@ -1,13 +1,17 @@
 package com.example.shopping_mall.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
 @Getter @Setter
-public class OrderItem {
+@AllArgsConstructor
+@NoArgsConstructor
+public class OrderItem extends BaseTime {
 
     @Id @GeneratedValue
     @Column(name = "order_item_id")

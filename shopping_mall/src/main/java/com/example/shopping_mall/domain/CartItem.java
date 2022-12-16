@@ -1,13 +1,19 @@
 package com.example.shopping_mall.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "cart_item")
 @Getter
-public class CartItem {
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class CartItem extends BaseTime {
 
     @Id @GeneratedValue
     @Column(name = "cart_item_id")
@@ -22,6 +28,14 @@ public class CartItem {
     private Item item;
 
     private int count;
+
+    public static CartItem createCartItem(Cart cart, Item item, int count) {
+        CartItem cartItem = new CartItem();
+        cartItem.setCart(cart);
+        cartItem.setItem(item);
+        cartItem.setCount(count);
+        return cartItem;
+    }
 
     public void addCount(int count) {
         this.count += count;

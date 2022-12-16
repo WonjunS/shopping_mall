@@ -1,10 +1,7 @@
 package com.example.shopping_mall.domain;
 
 import com.example.shopping_mall.constant.OrderStatus;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -14,7 +11,9 @@ import java.util.List;
 @Entity
 @Table(name = "orders")
 @Getter @Setter
-public class Order {
+@AllArgsConstructor
+@NoArgsConstructor
+public class Order extends BaseTime {
 
     @Id @GeneratedValue
     @Column(name = "order_id")

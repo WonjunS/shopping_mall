@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Item {
+public class Item extends BaseTime {
 
     @Id @GeneratedValue
     @Column(name = "item_id")
