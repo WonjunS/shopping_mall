@@ -1,6 +1,7 @@
 package com.example.shopping_mall.service;
 
 import com.example.shopping_mall.constant.ItemSellStatus;
+import com.example.shopping_mall.constant.OrderStatus;
 import com.example.shopping_mall.domain.Item;
 import com.example.shopping_mall.domain.Member;
 import com.example.shopping_mall.domain.Order;
@@ -49,7 +50,7 @@ class OrderServiceTest {
 
     public Member saveMember() {
         Member member = new Member();
-        member.setEmail("abcd@gmail.com");
+        member.setEmail("abcd2@gmail.com");
         return memberRepository.save(member);
     }
 
@@ -72,5 +73,24 @@ class OrderServiceTest {
         int totalPrice = orderDto.getCount() * item.getPrice();
 
         assertEquals(totalPrice, order.getTotalPrice());
+    }
+
+    @Test
+    @DisplayName("주문 취소 테스트")
+    void cancel() {
+        Item item = saveItem();
+        Member member = saveMember();
+
+        OrderDto orderDto = new OrderDto();
+        orderDto.setCount(10);
+        orderDto.setId(item.getId());
+
+        Long orderId = orderService.order(orderDto, member.getEmail());
+
+        Order order = orderRepository.findById(orderId).orElseThrow(EntityNotFoundException::new);
+        orderService.orderCancel(order.getId());
+
+        assertEquals(OrderStatus.CANCEL, order.getOrderStatus());
+        assertEquals(50, item.getQuantity());
     }
 }
