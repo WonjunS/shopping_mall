@@ -32,7 +32,7 @@ class MemberControllerTest {
 
     public Member createMember(String email, String password) {
         JoinFormDto joinFormDto = new JoinFormDto();
-        joinFormDto.setName("홍길동");
+        joinFormDto.setName("홍길동1");
         joinFormDto.setEmail(email);
         joinFormDto.setPassword(password);
         joinFormDto.setPhone("123-4567");
@@ -48,13 +48,26 @@ class MemberControllerTest {
     @Test
     @DisplayName("로그인 테스트")
     public void login() throws Exception {
-        String email = "abc@gmail.com";
-        String password = "1234";
-//        this.createMember(email, password);
+        String email = "abcdef@gmail.com";
+        String password = "123456";
+        this.createMember(email, password);
         mockMvc.perform(formLogin().userParameter("email")
                 .loginProcessingUrl("/member/login")
                 .user(email).password(password))
             .andExpect(SecurityMockMvcResultMatchers.authenticated());
+    }
+
+    @Test
+    @DisplayName("로그인 실패 테스트")
+    public void loginFailTest() throws Exception {
+
+        String email = "abcdef@gmail.com";
+        String password = "123456";
+        this.createMember(email, password);
+
+        mockMvc.perform(formLogin().loginProcessingUrl("/member/login")
+                        .userParameter("email").user(email).password("12345"))
+                .andExpect(SecurityMockMvcResultMatchers.unauthenticated());
     }
 
 }
