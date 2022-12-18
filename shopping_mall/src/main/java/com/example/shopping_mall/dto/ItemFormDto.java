@@ -8,6 +8,8 @@ import org.modelmapper.ModelMapper;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter @Setter
 public class ItemFormDto {
@@ -27,6 +29,9 @@ public class ItemFormDto {
     private int quantity;
 
     private ItemSellStatus itemSellStatus;
+
+    private List<ItemImgDto> itemImgDtoList = new ArrayList<>();
+    private List<Long> itemImgIds = new ArrayList<>();
 
     private static ModelMapper modelMapper = new ModelMapper();
 
