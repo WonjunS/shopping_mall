@@ -27,7 +27,7 @@ class MemberServiceTest {
         // given
         JoinFormDto joinFormDto = new JoinFormDto();
         joinFormDto.setName("홍길동");
-        joinFormDto.setEmail("abc1@gmail.com");
+        joinFormDto.setEmail("abcdef@gmail.com");
         joinFormDto.setPassword("123456");
         joinFormDto.setPhone("123-4567");
         joinFormDto.setStreet("1 Street");
@@ -54,7 +54,7 @@ class MemberServiceTest {
         // given
         JoinFormDto joinFormDto = new JoinFormDto();
         joinFormDto.setName("홍길동");
-        joinFormDto.setEmail("abc@gmail.com");
+        joinFormDto.setEmail("abcd@gmail.com");
         joinFormDto.setPassword("123456");
         joinFormDto.setPhone("123-4567");
         joinFormDto.setStreet("1 Street");
