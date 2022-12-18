@@ -23,15 +23,10 @@ public class Member extends BaseTime {
 
     @Column(unique = true)
     private String email;
-
     private String password;
-
     private String phone;
-
     private String street;
-
     private String city;
-
     private String zipcode;
 
     @Enumerated(EnumType.STRING)
