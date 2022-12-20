@@ -10,9 +10,9 @@ import com.example.shopping_mall.repository.CartRepository;
 import com.example.shopping_mall.repository.ItemRepository;
 import com.example.shopping_mall.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.thymeleaf.util.StringUtils;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
@@ -105,5 +105,18 @@ public class CartService {
         }
 
         return orderId;
+    }
+
+    @Transactional(readOnly = true)
+    public boolean validateCartItem(Long cartItemId, String email) {
+        Member currMember = memberRepository.findByEmail(email);
+
+        CartItem cartItem = cartItemRepository.findById(cartItemId).orElseThrow(EntityNotFoundException::new);
+        Member savedMember = cartItem.getCart().getMember();
+
+        if(StringUtils.equals(currMember.getEmail(), savedMember.getEmail())) {
+            return true;
+        }
+        return false;
     }
 }
