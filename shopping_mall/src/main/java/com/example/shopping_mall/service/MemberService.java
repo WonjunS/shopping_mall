@@ -14,12 +14,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class MemberService implements UserDetailsService {
 
-    @Autowired
-    private MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
 
     public Member save(Member member) {
         validateDuplicationMember(member);
@@ -30,7 +28,7 @@ public class MemberService implements UserDetailsService {
         Member findMember = memberRepository.findByEmail(member.getEmail());
 
         if(findMember != null) {
-            throw new IllegalArgumentException("이미 존재하는 회원입니다.");
+            throw new IllegalStateException("이미 존재하는 회원입니다.");
         }
     }
 
