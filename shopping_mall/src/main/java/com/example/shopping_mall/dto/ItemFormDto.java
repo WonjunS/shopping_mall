@@ -17,10 +17,10 @@ public class ItemFormDto {
     private Long id;
 
     @NotNull
-    private String name;
+    private String itemName;
 
     @NotBlank
-    private String detail;
+    private String itemDetail;
 
     @NotNull
     private int price;
