@@ -55,7 +55,7 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
     // 상품명 또는 등록자 아이디에 대한 조회 조건
     private BooleanExpression searchByLike(String searchBy, String searchQuery) {
         if (StringUtils.equals("name", searchBy)) {
-            return QItem.item.name.like("%" + searchQuery + "%");
+            return QItem.item.itemName.like("%" + searchQuery + "%");
         }
 //        else if (StringUtils.equals("createdBy", searchBy)) {
 //            return QItem.item.createdDate.like("%" + searchQuery + "%");
@@ -64,7 +64,7 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
     }
 
     private BooleanExpression itemNameLike(String searchQuery) {
-        return StringUtils.isEmpty(searchQuery) ? null : QItem.item.name.like("%" + searchQuery + "%");
+        return StringUtils.isEmpty(searchQuery) ? null : QItem.item.itemName.like("%" + searchQuery + "%");
     }
 
     @Override
@@ -101,8 +101,8 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
                 .select(
                         new QMainItemDto(
                                 item.id,
-                                item.name,
-                                item.detail,
+                                item.itemName,
+                                item.itemDetail,
                                 itemImg.imgUrl,
                                 item.price)
                 )
