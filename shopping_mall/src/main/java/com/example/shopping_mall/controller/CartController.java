@@ -50,8 +50,8 @@ public class CartController {
     // 장바구니 조회
     @GetMapping(value = "/cart")
     public String cartList(Principal principal, Model model) {
-        List<CartListDto> cartListDtoList = cartService.getCartList(principal.getName());
-        model.addAttribute("cartItems", cartListDtoList);
+        List<CartListDto> cartListDtos = cartService.getCartList(principal.getName());
+        model.addAttribute("cartItems", cartListDtos);
         return "cart/cartList";
     }
 
