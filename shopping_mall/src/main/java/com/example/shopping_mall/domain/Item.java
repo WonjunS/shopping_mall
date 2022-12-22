@@ -19,8 +19,8 @@ public class Item extends BaseTime {
     @Column(name = "item_id")
     private Long id;
 
-    private String name;
-    private String detail;
+    private String itemName;
+    private String itemDetail;
 
     private int price;
     private int quantity;
@@ -29,8 +29,8 @@ public class Item extends BaseTime {
     private ItemSellStatus itemSellStatus;
 
     public void updateItem(ItemFormDto itemFormDto) {
-        this.name = itemFormDto.getName();
-        this.detail = itemFormDto.getDetail();
+        this.itemName = itemFormDto.getItemName();
+        this.itemDetail = itemFormDto.getItemDetail();
         this.price = itemFormDto.getPrice();
         this.quantity = itemFormDto.getQuantity();
         this.itemSellStatus = itemFormDto.getItemSellStatus();
