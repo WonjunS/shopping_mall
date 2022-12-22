@@ -45,7 +45,7 @@ public class ItemController {
         }
 
         try {
-            itemService.updateItem(itemFormDto, itemImgFileList);
+            itemService.saveItem(itemFormDto, itemImgFileList);
         } catch(Exception e) {
             model.addAttribute("errorMessage", "상품 수정 중 에러가 발생했습니다.");
             return "item/itemForm";
@@ -57,8 +57,7 @@ public class ItemController {
     @GetMapping(value = {"/admin/items", "/admin/items/{page}"})
     public String itemManage(ItemSearchDto itemSearchDto,
                              @PathVariable(name = "page") Optional<Integer> page, Model model) {
-
-        // PageRequest.of() 메소드를 통해 Pageable 객체 생성
+        
         Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 3);
         Page<Item> items = itemService.getAdminItemPage(itemSearchDto, pageable);
 
