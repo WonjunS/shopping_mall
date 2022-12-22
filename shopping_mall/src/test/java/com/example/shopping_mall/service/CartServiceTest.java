@@ -36,9 +36,9 @@ class CartServiceTest {
 
     public Item saveItem() {
         Item item = new Item();
-        item.setName("테스트 상품");
+        item.setItemName("테스트 상품");
         item.setPrice(20000);
-        item.setDetail("테스트 상품 상세 설명");
+        item.setItemDetail("테스트 상품 상세 설명");
         item.setQuantity(40);
         item.setItemSellStatus(ItemSellStatus.SELL);
 
@@ -56,7 +56,7 @@ class CartServiceTest {
         Member member = saveMember();
 
         CartItemDto cartItemDto = new CartItemDto();
-        cartItemDto.setId(item.getId());
+        cartItemDto.setItemId(item.getId());
         cartItemDto.setCount(10);
 
         return cartService.addToCart(cartItemDto, member.getEmail());
@@ -69,7 +69,7 @@ class CartServiceTest {
         Member member = saveMember();
 
         CartItemDto cartItemDto = new CartItemDto();
-        cartItemDto.setId(item.getId());
+        cartItemDto.setItemId(item.getId());
         cartItemDto.setCount(10);
 
         Long cartItemId = cartService.addToCart(cartItemDto, member.getEmail());
