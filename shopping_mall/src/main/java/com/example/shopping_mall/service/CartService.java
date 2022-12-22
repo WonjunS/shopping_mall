@@ -31,8 +31,6 @@ public class CartService {
 
     // 장바구니 담기
     public Long addToCart(CartItemDto cartItemDto, String email) {
-        Item item = itemRepository.findById(cartItemDto.getId())
-                .orElseThrow(EntityNotFoundException::new);
         Member member = memberRepository.findByEmail(email);
         Cart cart = cartRepository.findByMemberId(member.getId());
 
@@ -41,16 +39,17 @@ public class CartService {
             cartRepository.save(cart);
         }
 
+        Item item = itemRepository.findById(cartItemDto.getItemId()).orElseThrow(EntityNotFoundException::new);
         CartItem cartItem = cartItemRepository.findByCartIdAndItemId(cart.getId(), item.getId());
-        if(cartItem != null) {
+
+        if(cartItem == null) {
+            cartItem = CartItem.createCartItem(cart, item, cartItemDto.getCount());
+            cartItemRepository.save(cartItem);
+        } else {
             cartItem.addCount(cartItemDto.getCount());
-            return cartItem.getId();
         }
 
-        CartItem newCartItem = CartItem.createCartItem(cart, item, cartItemDto.getCount());
-        cartItemRepository.save(newCartItem);
-
-        return newCartItem.getId();
+        return cartItem.getId();
     }
 
     // 장바구니 조회
