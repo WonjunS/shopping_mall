@@ -25,14 +25,14 @@ public class OrderItem extends BaseTime {
     @JoinColumn(name = "order_id")
     private Order order;
 
-    private int price;
+    private int orderPrice;
     private int count;
 
     public static OrderItem createOrderItem(Item item, int count) {
         OrderItem orderItem = new OrderItem();
         orderItem.setItem(item);
         orderItem.setCount(count);
-        orderItem.setPrice(item.getPrice());
+        orderItem.setOrderPrice(item.getPrice());
 
         item.removeStock(count);
 
@@ -40,7 +40,7 @@ public class OrderItem extends BaseTime {
     }
 
     public int getTotalPrice() {
-        return this.price * this.count;
+        return this.orderPrice * this.count;
     }
 
     public void cancel() {

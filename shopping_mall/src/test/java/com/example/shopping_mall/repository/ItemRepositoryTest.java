@@ -25,8 +25,8 @@ class ItemRepositoryTest {
         // given
         String name = "Name 1";
         Item item = Item.builder()
-                .name(name)
-                .detail("테스트 상품 상세 설명")
+                .itemName(name)
+                .itemDetail("테스트 상품 상세 설명")
                 .price(10000)
                 .quantity(10)
                 .itemSellStatus(ItemSellStatus.SELL)
@@ -36,16 +36,16 @@ class ItemRepositoryTest {
         Item savedItem = itemRepository.save(item);
 
         // then
-        assertEquals(name, savedItem.getName());
+        assertEquals(name, savedItem.getItemName());
     }
 
     @Test
     @DisplayName("상품명 조회 테스트")
     public void findByItemNameTest(){
         this.save();
-        List<Item> itemList = itemRepository.findByName("Name 1");
+        List<Item> itemList = itemRepository.findByItemName("Name 1");
         for(Item item : itemList) {
-            System.out.println("Item: " + item.getName());
+            System.out.println("Item: " + item.getItemName());
         }
     }
 

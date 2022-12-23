@@ -56,9 +56,9 @@ class ItemServiceTest {
     @WithMockUser(username = "admin", roles = "ADMIN")
     void saveItem() throws Exception {
         ItemFormDto itemFormDto = new ItemFormDto();
-        itemFormDto.setName("테스트상품");
+        itemFormDto.setItemName("테스트상품");
         itemFormDto.setItemSellStatus(ItemSellStatus.SELL);
-        itemFormDto.setDetail("테스트 상품 입니다.");
+        itemFormDto.setItemDetail("테스트 상품 입니다.");
         itemFormDto.setPrice(10000);
         itemFormDto.setQuantity(100);
 
@@ -70,9 +70,9 @@ class ItemServiceTest {
         Item item = itemRepository.findById(itemId)
                 .orElseThrow(EntityNotFoundException::new);
 
-        assertEquals(itemFormDto.getName(), item.getName());
+        assertEquals(itemFormDto.getItemName(), item.getItemName());
         assertEquals(itemFormDto.getItemSellStatus(), item.getItemSellStatus());
-        assertEquals(itemFormDto.getDetail(), item.getDetail());
+        assertEquals(itemFormDto.getItemDetail(), item.getItemDetail());
         assertEquals(itemFormDto.getPrice(), item.getPrice());
         assertEquals(itemFormDto.getQuantity(), item.getQuantity());
         assertEquals(multipartFileList.get(0).getOriginalFilename(), itemImgList.get(0).getOriImgName());

@@ -17,10 +17,10 @@ public class ItemFormDto {
     private Long id;
 
     @NotNull
-    private String name;
+    private String itemName;
 
     @NotBlank
-    private String detail;
+    private String itemDetail;
 
     @NotNull
     private int price;
@@ -39,7 +39,7 @@ public class ItemFormDto {
         return modelMapper.map(this, Item.class);
     }
 
-    private ItemFormDto of(Item item) {
+    public static ItemFormDto of(Item item) {
         return modelMapper.map(item, ItemFormDto.class);
     }
 

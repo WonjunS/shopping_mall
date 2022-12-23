@@ -25,13 +25,13 @@ public class MemberController {
 
     // 회원가입 페이지
     @GetMapping("/new")
-    public String memberForm(Model model) {
-        model.addAttribute("joinForm", new JoinFormDto());
+    public String memberForm(JoinFormDto joinFormDto, Model model) {
+        model.addAttribute("joinFormDto", joinFormDto);
         return "member/joinForm";
     }
 
     @PostMapping("/new")
-    public String createMember(@Valid JoinFormDto joinFormDto, BindingResult result) {
+    public String createMember(@Valid JoinFormDto joinFormDto, BindingResult result, Model model) {
         if(result.hasErrors()) {
             return "member/joinForm";
         }
@@ -39,7 +39,8 @@ public class MemberController {
         try {
             Member member = Member.createMember(joinFormDto, passwordEncoder);
             memberService.save(member);
-        } catch(IllegalStateException e) {
+        } catch(Exception e) {
+            model.addAttribute("errorMessage", e.getMessage());
             return "member/joinForm";
         }
         return "redirect:/";

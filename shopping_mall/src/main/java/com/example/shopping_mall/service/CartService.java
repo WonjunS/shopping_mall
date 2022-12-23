@@ -10,9 +10,9 @@ import com.example.shopping_mall.repository.CartRepository;
 import com.example.shopping_mall.repository.ItemRepository;
 import com.example.shopping_mall.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.thymeleaf.util.StringUtils;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
@@ -31,8 +31,6 @@ public class CartService {
 
     // 장바구니 담기
     public Long addToCart(CartItemDto cartItemDto, String email) {
-        Item item = itemRepository.findById(cartItemDto.getId())
-                .orElseThrow(EntityNotFoundException::new);
         Member member = memberRepository.findByEmail(email);
         Cart cart = cartRepository.findByMemberId(member.getId());
 
@@ -41,16 +39,17 @@ public class CartService {
             cartRepository.save(cart);
         }
 
+        Item item = itemRepository.findById(cartItemDto.getItemId()).orElseThrow(EntityNotFoundException::new);
         CartItem cartItem = cartItemRepository.findByCartIdAndItemId(cart.getId(), item.getId());
-        if(cartItem != null) {
+
+        if(cartItem == null) {
+            cartItem = CartItem.createCartItem(cart, item, cartItemDto.getCount());
+            cartItemRepository.save(cartItem);
+        } else {
             cartItem.addCount(cartItemDto.getCount());
-            return cartItem.getId();
         }
 
-        CartItem newCartItem = CartItem.createCartItem(cart, item, cartItemDto.getCount());
-        cartItemRepository.save(newCartItem);
-
-        return newCartItem.getId();
+        return cartItem.getId();
     }
 
     // 장바구니 조회
@@ -105,5 +104,18 @@ public class CartService {
         }
 
         return orderId;
+    }
+
+    @Transactional(readOnly = true)
+    public boolean validateCartItem(Long cartItemId, String email) {
+        Member currMember = memberRepository.findByEmail(email);
+
+        CartItem cartItem = cartItemRepository.findById(cartItemId).orElseThrow(EntityNotFoundException::new);
+        Member savedMember = cartItem.getCart().getMember();
+
+        if(StringUtils.equals(currMember.getEmail(), savedMember.getEmail())) {
+            return true;
+        }
+        return false;
     }
 }

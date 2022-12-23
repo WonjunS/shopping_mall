@@ -10,27 +10,27 @@ import javax.validation.constraints.*;
 @AllArgsConstructor
 public class JoinFormDto {
 
-    @NotBlank
+    @NotBlank(message = "이름은 필수 입력 값입니다.")
     private String name;
 
-    @NotBlank
-    @Size(min = 6)
+    @NotBlank(message = "비밀번호는 필수 입력 값입니다.")
+    @Size(min = 6, message = "비밀번호는 6자 이상이어야 합니다.")
     private String password;
 
-    @NotBlank
-    @Email
+    @NotBlank(message = "이메일은 필수 입력 값입니다.")
+    @Email(message = "이메일 형식으로 입력해주세요.")
     private String email;
 
-    @NotBlank
+    @NotBlank(message = "전화번호는 필수 입력 값입니다.")
     private String phone;
 
-    @NotBlank
+    @NotBlank(message = "거리는 필수 입력 값입니다.")
     private String street;
 
-    @NotBlank
+    @NotBlank(message = "도시는 필수 입력 값입니다.")
     private String city;
 
-    @NotBlank
+    @NotBlank(message = "우편번호는 필수 입력 값입니다.")
     private String zipcode;
 
 }

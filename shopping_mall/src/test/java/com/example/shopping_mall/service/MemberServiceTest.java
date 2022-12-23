@@ -63,7 +63,7 @@ class MemberServiceTest {
 
         // when
         Member member = Member.createMember(joinFormDto, passwordEncoder);
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> memberService.save(member));
+        Exception exception = assertThrows(IllegalStateException.class, () -> memberService.save(member));
 
         // then
         assertEquals("이미 존재하는 회원입니다.", exception.getMessage());
