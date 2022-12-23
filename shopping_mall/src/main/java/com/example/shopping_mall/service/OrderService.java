@@ -32,7 +32,7 @@ public class OrderService {
 
     // 주문 하기
     public Long order(OrderDto orderDto, String email) {
-        Item item = itemRepository.findById(orderDto.getId())
+        Item item = itemRepository.findById(orderDto.getItemId())
                 .orElseThrow(EntityNotFoundException::new);
 
         Member member = memberRepository.findByEmail(email);
@@ -73,7 +73,7 @@ public class OrderService {
     public boolean validateOrder(Long orderId, String email) {
         Order order = orderRepository.findById(orderId).orElseThrow(EntityNotFoundException::new);
 
-        if(StringUtils.equals(email, order.getMember().getId())) {
+        if(StringUtils.equals(order.getMember().getEmail(), email)) {
             return true;
         }
         return false;
@@ -92,7 +92,7 @@ public class OrderService {
 
         List<OrderItem> orderItemList = new ArrayList<>();
         for(OrderDto orderDto : orderDtoList) {
-            Item item = itemRepository.findById(orderDto.getId()).orElseThrow(EntityNotFoundException::new);
+            Item item = itemRepository.findById(orderDto.getItemId()).orElseThrow(EntityNotFoundException::new);
             OrderItem orderItem = OrderItem.createOrderItem(item, orderDto.getCount());
             orderItemList.add(orderItem);
         }

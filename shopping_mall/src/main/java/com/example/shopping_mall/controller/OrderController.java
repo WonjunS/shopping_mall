@@ -27,7 +27,7 @@ public class OrderController {
     private final OrderService orderService;
 
     // 주문하기
-    @PostMapping(value = "/orders")
+    @PostMapping(value = "/order")
     @ResponseBody
     public ResponseEntity order(@RequestBody @Valid OrderDto orderDto,
                                 BindingResult bindingResult, Principal principal) {
