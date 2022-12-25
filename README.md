@@ -7,8 +7,9 @@
 **Front-End**
 - Thymeleaf
 - HTML, CSS, JS
-- Bootstrap
-<br>
+- Bootstrap  
+
+
 **Back-End**
 - Spring Boot
 - JPA
