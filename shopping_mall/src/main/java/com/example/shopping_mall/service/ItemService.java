@@ -1,5 +1,6 @@
 package com.example.shopping_mall.service;
 
+import com.example.shopping_mall.constant.ItemSellStatus;
 import com.example.shopping_mall.domain.Item;
 import com.example.shopping_mall.domain.ItemImg;
 import com.example.shopping_mall.dto.ItemFormDto;
@@ -58,6 +59,7 @@ public class ItemService {
                 .orElseThrow(EntityNotFoundException::new);
 
         item.updateItem(itemFormDto);
+        item.updateItemSellStatus(item.getQuantity());
 
         List<Long> itemImgIds = itemFormDto.getItemImgIds();
 
