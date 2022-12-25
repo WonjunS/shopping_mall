@@ -36,6 +36,15 @@ public class Item extends BaseTime {
         this.itemSellStatus = itemFormDto.getItemSellStatus();
     }
 
+    public void updateItemSellStatus(int quantity) {
+        if(quantity > 0) {
+            this.itemSellStatus = ItemSellStatus.SELL;
+        }
+        if(quantity == 0) {
+            this.itemSellStatus = ItemSellStatus.SOLD_OUT;
+        }
+    }
+
     public void addStock(int quantity) {
         this.quantity += quantity;
     }
