@@ -1,6 +1,7 @@
 package com.example.shopping_mall.service;
 
 import com.example.shopping_mall.domain.*;
+import com.example.shopping_mall.dto.MailDto;
 import com.example.shopping_mall.dto.OrderDto;
 import com.example.shopping_mall.dto.OrderHistDto;
 import com.example.shopping_mall.dto.OrderItemDto;
@@ -29,6 +30,7 @@ public class OrderService {
     private final MemberRepository memberRepository;
     private final OrderRepository orderRepository;
     private final ItemImgRepository itemImgRepository;
+    private final MailService mailService;
 
     // 주문 하기
     public Long order(OrderDto orderDto, String email) {
@@ -44,6 +46,12 @@ public class OrderService {
 
         Order order = Order.createOrder(member, orderItemList);
         orderRepository.save(order);
+
+        MailDto mailDto = new MailDto();
+        mailDto.setAddress(member.getEmail());
+        mailDto.setTitle("Your order");
+        mailDto.setMessage(Integer.toString(order.getTotalPrice()));
+        mailService.mailSend(mailDto);
 
         return order.getId();
     }
@@ -99,6 +107,13 @@ public class OrderService {
 
         Order order = Order.createOrder(member, orderItemList);
         orderRepository.save(order);
+
+        MailDto mailDto = new MailDto();
+        mailDto.setAddress(member.getEmail());
+        mailDto.setTitle("Your order");
+        mailDto.setMessage(Integer.toString(order.getTotalPrice()));
+        mailService.mailSend(mailDto);
+
         return order.getId();
     }
 }
