@@ -61,7 +61,7 @@ class OrderServiceTest {
         Member member = saveMember();
 
         OrderDto orderDto = new OrderDto();
-        orderDto.setId(item.getId());
+        orderDto.setItemId(item.getId());
         orderDto.setCount(10);
 
         Long orderId = orderService.order(orderDto, member.getEmail());
@@ -83,7 +83,7 @@ class OrderServiceTest {
 
         OrderDto orderDto = new OrderDto();
         orderDto.setCount(10);
-        orderDto.setId(item.getId());
+        orderDto.setItemId(item.getId());
 
         Long orderId = orderService.order(orderDto, member.getEmail());
 

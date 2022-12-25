@@ -90,7 +90,7 @@ public class CartService {
             CartItem cartItem = cartItemRepository.findById(cartOrderDto.getCartItemId())
                     .orElseThrow(EntityNotFoundException::new);
             OrderDto orderDto = new OrderDto();
-            orderDto.setId(cartItem.getItem().getId());
+            orderDto.setItemId(cartItem.getItem().getId());
             orderDto.setCount(cartItem.getCount());
             orderDtoList.add(orderDto);
         }

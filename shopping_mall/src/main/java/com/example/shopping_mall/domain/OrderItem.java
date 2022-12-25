@@ -1,5 +1,6 @@
 package com.example.shopping_mall.domain;
 
+import com.example.shopping_mall.constant.ItemSellStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,6 +36,7 @@ public class OrderItem extends BaseTime {
         orderItem.setOrderPrice(item.getPrice());
 
         item.removeStock(count);
+        item.updateItemSellStatus(item.getQuantity());
 
         return orderItem;
     }

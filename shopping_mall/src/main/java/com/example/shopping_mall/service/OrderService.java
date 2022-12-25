@@ -1,6 +1,7 @@
 package com.example.shopping_mall.service;
 
 import com.example.shopping_mall.domain.*;
+import com.example.shopping_mall.dto.MailDto;
 import com.example.shopping_mall.dto.OrderDto;
 import com.example.shopping_mall.dto.OrderHistDto;
 import com.example.shopping_mall.dto.OrderItemDto;
@@ -29,10 +30,11 @@ public class OrderService {
     private final MemberRepository memberRepository;
     private final OrderRepository orderRepository;
     private final ItemImgRepository itemImgRepository;
+    private final MailService mailService;
 
     // 주문 하기
     public Long order(OrderDto orderDto, String email) {
-        Item item = itemRepository.findById(orderDto.getId())
+        Item item = itemRepository.findById(orderDto.getItemId())
                 .orElseThrow(EntityNotFoundException::new);
 
         Member member = memberRepository.findByEmail(email);
@@ -44,6 +46,12 @@ public class OrderService {
 
         Order order = Order.createOrder(member, orderItemList);
         orderRepository.save(order);
+
+        MailDto mailDto = new MailDto();
+        mailDto.setAddress(member.getEmail());
+        mailDto.setTitle("Your order");
+        mailDto.setMessage(Integer.toString(order.getTotalPrice()));
+        mailService.mailSend(mailDto);
 
         return order.getId();
     }
@@ -73,7 +81,7 @@ public class OrderService {
     public boolean validateOrder(Long orderId, String email) {
         Order order = orderRepository.findById(orderId).orElseThrow(EntityNotFoundException::new);
 
-        if(StringUtils.equals(email, order.getMember().getId())) {
+        if(StringUtils.equals(order.getMember().getEmail(), email)) {
             return true;
         }
         return false;
@@ -92,13 +100,20 @@ public class OrderService {
 
         List<OrderItem> orderItemList = new ArrayList<>();
         for(OrderDto orderDto : orderDtoList) {
-            Item item = itemRepository.findById(orderDto.getId()).orElseThrow(EntityNotFoundException::new);
+            Item item = itemRepository.findById(orderDto.getItemId()).orElseThrow(EntityNotFoundException::new);
             OrderItem orderItem = OrderItem.createOrderItem(item, orderDto.getCount());
             orderItemList.add(orderItem);
         }
 
         Order order = Order.createOrder(member, orderItemList);
         orderRepository.save(order);
+
+        MailDto mailDto = new MailDto();
+        mailDto.setAddress(member.getEmail());
+        mailDto.setTitle("Your order");
+        mailDto.setMessage(Integer.toString(order.getTotalPrice()));
+        mailService.mailSend(mailDto);
+
         return order.getId();
     }
 }
