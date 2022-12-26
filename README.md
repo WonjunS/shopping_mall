@@ -13,6 +13,7 @@
 
 **Back-End**
 - Spring Boot
+- Spring Security
 - JPA
 - MySQL   
 
