@@ -25,8 +25,8 @@
 - IntelliJ IDEA  
 
 **개발 도구**
-- 리비전 제어 - Git
-- 빌드 도구 - Gradle  
+- 리비전 제어: Git
+- 빌드 도구: Gradle  
 
 **개발 언어**
 - Java  
@@ -34,7 +34,7 @@
 **형상 관리**
 - GitHub
 
-## 3. 데이터베이스 설계
+## 3. 데이터베이스 설계 (ERD)
 ![Shopping Mall (1)](https://user-images.githubusercontent.com/93713151/209469085-d85417eb-7cab-439f-941c-1d1ccd17a29f.png)
 
 ## 4. 실행 화면
