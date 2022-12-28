@@ -2,18 +2,19 @@ package com.example.shopping_mall.controller;
 
 import com.example.shopping_mall.domain.Member;
 import com.example.shopping_mall.dto.JoinFormDto;
+import com.example.shopping_mall.repository.OrderRepository;
 import com.example.shopping_mall.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
@@ -22,6 +23,7 @@ public class MemberController {
 
     private final MemberService memberService;
     private final PasswordEncoder passwordEncoder;
+    private final OrderRepository orderRepository;
 
     // 회원가입 페이지
     @GetMapping("/new")
@@ -45,6 +47,52 @@ public class MemberController {
         }
         return "redirect:/";
     }
+
+    @GetMapping("/list")
+    public String List(Model model) {
+        List<Member> members = memberService.findMembers();
+        Map<Long, Long> orderCounts = new HashMap<>();
+        for(Member m : members) {
+            Long count = orderRepository.countOrders(m.getEmail());
+            orderCounts.put(m.getId(), count);
+        }
+        model.addAttribute("members", members);
+        model.addAttribute("orderCounts", orderCounts);
+
+        return "/member/memberList";
+    }
+
+    // TODO: 회원정보 수정 구현
+    // 참고 링크: https://mycodearchive.tistory.com/213
+
+//    // 회원 정보 수정 페이지
+//    @GetMapping("/update/{memberId}")
+//    public String memberDetail(@PathVariable("memberId") Long memberId, Model model) {
+//        try {
+//            JoinFormDto joinFormDto = memberService.getMemberDetail(memberId);
+//            model.addAttribute("joinFormDto", joinFormDto);
+//        } catch(EntityNotFoundException e) {
+//            model.addAttribute("errorMessage", "존재하지 않는 회원입니다.");
+//            model.addAttribute("joinFormDto", new JoinFormDto());
+//        }
+//
+//        return "member/joinForm";
+//    }
+//
+////    @PostMapping("/update")
+////    public String memberUpdate(@Valid JoinFormDto joinFormDto, BindingResult bindingResult, Model model) {
+////        if(bindingResult.hasErrors()) {
+////            return "member/joinForm";
+////        }
+////
+////        try {
+////            memberService.updateMember(joinFormDto);
+////        } catch (Exception e) {
+////            model.addAttribute("errorMessage", "회원 정보 수정 중 에러가 발생했습니다.");
+////            return "member/joinForm";
+////        }
+////        return "redirect:/";
+////    }
 
     // 로그인 페이지
     @GetMapping("/login")
