@@ -1,6 +1,7 @@
 package com.example.shopping_mall.service;
 
 import com.example.shopping_mall.domain.Member;
+import com.example.shopping_mall.dto.JoinFormDto;
 import com.example.shopping_mall.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
@@ -30,6 +32,10 @@ public class MemberService implements UserDetailsService {
         if(findMember != null) {
             throw new IllegalStateException("이미 존재하는 회원입니다.");
         }
+    }
+
+    public List<Member> findMembers() {
+        return memberRepository.findAll();
     }
 
     @Override
