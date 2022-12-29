@@ -1,4 +1,4 @@
-package com.example.shopping_mall.domain;
+package com.example.shopping_mall.entity;
 
 import com.example.shopping_mall.constant.Role;
 import com.example.shopping_mall.dto.JoinFormDto;
@@ -45,16 +45,4 @@ public class Member extends BaseTime {
                 .build();
     }
 
-    public void updatePassword(String password) {
-        this.password = password;
-    }
-
-    public void updateDetails(JoinFormDto joinFormDTO) {
-        this.name = joinFormDTO.getName();
-        this.email = joinFormDTO.getEmail();
-        this.phone = joinFormDTO.getPassword();
-        this.street = joinFormDTO.getStreet();
-        this.city = joinFormDTO.getCity();
-        this.zipcode = joinFormDTO.getZipcode();
-    }
 }

@@ -1,6 +1,6 @@
 package com.example.shopping_mall.service;
 
-import com.example.shopping_mall.domain.*;
+import com.example.shopping_mall.entity.*;
 import com.example.shopping_mall.dto.MailDto;
 import com.example.shopping_mall.dto.OrderDto;
 import com.example.shopping_mall.dto.OrderHistDto;

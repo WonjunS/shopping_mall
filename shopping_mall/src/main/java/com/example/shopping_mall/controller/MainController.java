@@ -1,6 +1,5 @@
 package com.example.shopping_mall.controller;
 
-import com.example.shopping_mall.domain.Item;
 import com.example.shopping_mall.dto.ItemSearchDto;
 import com.example.shopping_mall.dto.MainItemDto;
 import com.example.shopping_mall.service.ItemService;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.util.List;
 import java.util.Optional;
 
 @Controller

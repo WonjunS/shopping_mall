@@ -1,6 +1,6 @@
 package com.example.shopping_mall.repository;
 
-import com.example.shopping_mall.domain.CartItem;
+import com.example.shopping_mall.entity.CartItem;
 import com.example.shopping_mall.dto.CartListDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

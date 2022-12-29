@@ -1,6 +1,6 @@
 package com.example.shopping_mall.repository;
 
-import com.example.shopping_mall.domain.Item;
+import com.example.shopping_mall.entity.Item;
 import com.example.shopping_mall.dto.ItemSearchDto;
 import com.example.shopping_mall.dto.MainItemDto;
 import org.springframework.data.domain.Page;

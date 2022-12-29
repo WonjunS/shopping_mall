@@ -1,4 +1,4 @@
-package com.example.shopping_mall.domain;
+package com.example.shopping_mall.entity;
 
 import com.example.shopping_mall.constant.ItemSellStatus;
 import com.example.shopping_mall.dto.ItemFormDto;

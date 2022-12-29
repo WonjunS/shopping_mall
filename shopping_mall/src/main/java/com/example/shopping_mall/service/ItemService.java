@@ -1,8 +1,7 @@
 package com.example.shopping_mall.service;
 
-import com.example.shopping_mall.constant.ItemSellStatus;
-import com.example.shopping_mall.domain.Item;
-import com.example.shopping_mall.domain.ItemImg;
+import com.example.shopping_mall.entity.Item;
+import com.example.shopping_mall.entity.ItemImg;
 import com.example.shopping_mall.dto.ItemFormDto;
 import com.example.shopping_mall.dto.ItemImgDto;
 import com.example.shopping_mall.dto.ItemSearchDto;

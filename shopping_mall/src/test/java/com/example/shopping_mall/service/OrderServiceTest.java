@@ -2,10 +2,10 @@ package com.example.shopping_mall.service;
 
 import com.example.shopping_mall.constant.ItemSellStatus;
 import com.example.shopping_mall.constant.OrderStatus;
-import com.example.shopping_mall.domain.Item;
-import com.example.shopping_mall.domain.Member;
-import com.example.shopping_mall.domain.Order;
-import com.example.shopping_mall.domain.OrderItem;
+import com.example.shopping_mall.entity.Item;
+import com.example.shopping_mall.entity.Member;
+import com.example.shopping_mall.entity.Order;
+import com.example.shopping_mall.entity.OrderItem;
 import com.example.shopping_mall.dto.OrderDto;
 import com.example.shopping_mall.repository.ItemRepository;
 import com.example.shopping_mall.repository.MemberRepository;

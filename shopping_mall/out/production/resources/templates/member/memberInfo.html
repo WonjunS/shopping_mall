@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/mainLayout}">
+
+<div layout:fragment="content">
+
+    <h2 class="mb-4">회원 정보</h2>
+
+    <table class="table table-hover">
+        <tbody th:each="member : ${details}">
+            <tr>
+                <th scope="row">회원이름</th>
+                <td th:text="${member.name}"></td>
+            </tr>
+            <tr>
+                <th scope="row">이메일</th>
+                <td th:text="${member.email}"></td>
+            </tr>
+            <tr>
+                <th scope="row">전화번호</th>
+                <td th:text="${member.phone}"></td>
+            </tr>
+            <tr>
+                <th scope="row">주소</th>
+                <td th:text="${member.street} + ', ' + ${member.city} + ', ' + ${member.zipcode}"></td>
+            </tr>
+            <tr>
+                <th scope="row">가입일</th>
+                <td th:text="${member.createdDate}"></td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+</html>

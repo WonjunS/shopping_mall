@@ -1,18 +1,14 @@
 package com.example.shopping_mall.service;
 
-import com.example.shopping_mall.domain.Member;
-import com.example.shopping_mall.dto.JoinFormDto;
+import com.example.shopping_mall.entity.Member;
 import com.example.shopping_mall.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
@@ -36,6 +32,12 @@ public class MemberService implements UserDetailsService {
 
     public List<Member> findMembers() {
         return memberRepository.findAll();
+    }
+
+    public Member findMember(String email) {
+        Member member = memberRepository.findByEmail(email);
+
+        return member;
     }
 
     @Override

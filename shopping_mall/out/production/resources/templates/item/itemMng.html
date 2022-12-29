@@ -7,7 +7,7 @@
 <th:block layout:fragment="script">
     <script th:inline="javascript">
         $(document).ready(function(){
-            $("#searchBtn").on("click",function(e) {
+            $("#searchBtn").on("click", function(e) {
                 e.preventDefault();
                 page(0);
             });
@@ -27,7 +27,6 @@
     </script>
 </th:block>
 
-<!-- 사용자 CSS 추가 -->
 <th:block layout:fragment="css">
     <style>
         select{
@@ -45,7 +44,6 @@
                 <td>상품아이디</td>
                 <td>상품명</td>
                 <td>상태</td>
-<!--                <td>등록자</td>-->
                 <td>등록일</td>
             </tr>
             </thead>
@@ -57,13 +55,12 @@
                 </td>
                 <td th:text="${item.itemSellStatus == T(com.example.shopping_mall.constant.ItemSellStatus).SELL} ? '판매중' : '품절'"></td>
                 <td th:text="${item.createdDate}"></td>
-<!--                <td th:text="${item.regTime}"></td>-->
             </tr>
             </tbody>
         </table>
 
-        <div th:with="start=${(items.number/maxPage)*maxPage + 1},
-     end=(${(items.totalPages == 0) ? 1 : (start + (maxPage - 1) < items.totalPages ? start + (maxPage - 1) : items.totalPages)})" >
+        <div th:with="start=${(items.number / maxPage) * maxPage + 1},
+            end=(${(items.totalPages == 0) ? 1 : (start + (maxPage - 1) < items.totalPages ? start + (maxPage - 1) : items.totalPages)})" >
 
             <ul class="pagination justify-content-center">
                 <!--Previous 이전 버튼-->

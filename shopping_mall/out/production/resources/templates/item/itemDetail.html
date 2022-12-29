@@ -22,7 +22,8 @@
     function calculateTotalPrice(){
       var count = $("#count").val();
       var price = $("#price").val();
-      var totalPrice = price * count;
+      const numberFormatter = Intl.NumberFormat('en-US');
+      var totalPrice = numberFormatter.format(price * count);
       $("#totalPrice").html(totalPrice + '원');
     }
 

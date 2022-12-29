@@ -1,4 +1,4 @@
-package com.example.shopping_mall.domain;
+package com.example.shopping_mall.entity;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 

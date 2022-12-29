@@ -24,10 +24,10 @@ public class JoinFormDto {
     @NotBlank(message = "전화번호는 필수 입력 값입니다.")
     private String phone;
 
-    @NotBlank(message = "거리는 필수 입력 값입니다.")
+    @NotBlank(message = "상세 주소는 필수 입력 값입니다.")
     private String street;
 
-    @NotBlank(message = "도시는 필수 입력 값입니다.")
+    @NotBlank(message = "도로명 주소는 필수 입력 값입니다.")
     private String city;
 
     @NotBlank(message = "우편번호는 필수 입력 값입니다.")

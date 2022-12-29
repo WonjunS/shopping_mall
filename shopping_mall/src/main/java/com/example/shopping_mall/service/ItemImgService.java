@@ -1,6 +1,6 @@
 package com.example.shopping_mall.service;
 
-import com.example.shopping_mall.domain.ItemImg;
+import com.example.shopping_mall.entity.ItemImg;
 import com.example.shopping_mall.repository.ItemImgRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

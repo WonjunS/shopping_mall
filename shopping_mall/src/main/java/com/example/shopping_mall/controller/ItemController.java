@@ -1,6 +1,6 @@
 package com.example.shopping_mall.controller;
 
-import com.example.shopping_mall.domain.Item;
+import com.example.shopping_mall.entity.Item;
 import com.example.shopping_mall.dto.ItemFormDto;
 import com.example.shopping_mall.dto.ItemSearchDto;
 import com.example.shopping_mall.service.ItemService;

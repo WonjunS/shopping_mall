@@ -1,9 +1,9 @@
 package com.example.shopping_mall.service;
 
-import com.example.shopping_mall.domain.Cart;
-import com.example.shopping_mall.domain.CartItem;
-import com.example.shopping_mall.domain.Item;
-import com.example.shopping_mall.domain.Member;
+import com.example.shopping_mall.entity.Cart;
+import com.example.shopping_mall.entity.CartItem;
+import com.example.shopping_mall.entity.Item;
+import com.example.shopping_mall.entity.Member;
 import com.example.shopping_mall.dto.*;
 import com.example.shopping_mall.repository.CartItemRepository;
 import com.example.shopping_mall.repository.CartRepository;

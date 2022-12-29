@@ -1,15 +1,13 @@
 package com.example.shopping_mall.service;
 
 import com.example.shopping_mall.constant.ItemSellStatus;
-import com.example.shopping_mall.domain.Item;
-import com.example.shopping_mall.domain.ItemImg;
+import com.example.shopping_mall.entity.Item;
+import com.example.shopping_mall.entity.ItemImg;
 import com.example.shopping_mall.dto.ItemFormDto;
 import com.example.shopping_mall.repository.ItemImgRepository;
 import com.example.shopping_mall.repository.ItemRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockMultipartFile;
