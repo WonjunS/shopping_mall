@@ -45,4 +45,13 @@ public class Member extends BaseTime {
                 .build();
     }
 
+    public void updateMember(JoinFormDto joinFormDto) {
+        this.name = joinFormDto.getName();
+        this.email = joinFormDto.getEmail();
+        this.phone = joinFormDto.getPhone();
+        this.street = joinFormDto.getStreet();
+        this.city = joinFormDto.getCity();
+        this.zipcode = joinFormDto.getZipcode();
+    }
+
 }
