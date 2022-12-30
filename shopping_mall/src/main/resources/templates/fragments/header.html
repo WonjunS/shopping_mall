@@ -13,11 +13,20 @@
 
         <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                <li class="nav-item" sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
-                    <a class="nav-link" href="/admin/item/new">상품 등록</a>
-                </li>
-                <li class="nav-item" sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
-                    <a class="nav-link" href="/admin/items">상품 관리</a>
+<!--                <li class="nav-item" sec:authorize="hasAnyAuthority('ROLE_ADMIN')">-->
+<!--                    <a class="nav-link" href="/admin/item/new">상품 등록</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item" sec:authorize="hasAnyAuthority('ROLE_ADMIN')">-->
+<!--                    <a class="nav-link" href="/admin/items">상품 관리</a>-->
+<!--                </li>-->
+                <li class="nav-item dropdown" sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
+                    <a class="nav-link dropdown-toggle" href="/admin/items" role="button" data-toggle="dropdown" aria-expanded="false">
+                        상품 관리
+                    </a>
+                    <div class="dropdown-menu">
+                        <a class="nav-link" href="/admin/item/new">상품 등록</a>
+                        <a class="nav-link" href="/admin/items">상품 수정</a>
+                    </div>
                 </li>
                 <li class="nav-item" sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
                     <a class="nav-link" href="/member/list">회원 목록</a>
