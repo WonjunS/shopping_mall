@@ -1,5 +1,6 @@
 package com.example.shopping_mall.service;
 
+import com.example.shopping_mall.dto.JoinFormDto;
 import com.example.shopping_mall.entity.Member;
 import com.example.shopping_mall.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -8,7 +9,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
@@ -35,9 +38,7 @@ public class MemberService implements UserDetailsService {
     }
 
     public Member findMember(String email) {
-        Member member = memberRepository.findByEmail(email);
-
-        return member;
+        return memberRepository.findByEmail(email);
     }
 
     @Override
@@ -53,6 +54,27 @@ public class MemberService implements UserDetailsService {
                 .password(member.getPassword())
                 .roles(member.getRole().toString())
                 .build();
+    }
+
+    public Long updateMember(JoinFormDto joinFormDto) throws Exception {
+        Member member = memberRepository.findById(joinFormDto.getId())
+                .orElseThrow(EntityNotFoundException::new);
+
+        member.updateMember(joinFormDto);
+
+        memberRepository.save(member);
+
+        return member.getId();
+    }
+
+    @Transactional(readOnly = true)
+    public JoinFormDto getMemberDetail(Long memberId) {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(EntityNotFoundException::new);
+
+        JoinFormDto joinFormDto = JoinFormDto.of(member);
+
+        return joinFormDto;
     }
 
 }
