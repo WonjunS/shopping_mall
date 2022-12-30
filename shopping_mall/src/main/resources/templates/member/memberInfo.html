@@ -9,28 +9,33 @@
 
     <table class="table table-hover">
         <tbody th:each="member : ${details}">
-            <tr>
-                <th scope="row">회원이름</th>
-                <td th:text="${member.name}"></td>
-            </tr>
-            <tr>
-                <th scope="row">이메일</th>
-                <td th:text="${member.email}"></td>
-            </tr>
-            <tr>
-                <th scope="row">전화번호</th>
-                <td th:text="${member.phone}"></td>
-            </tr>
-            <tr>
-                <th scope="row">주소</th>
-                <td th:text="${member.street} + ', ' + ${member.city} + ', ' + ${member.zipcode}"></td>
-            </tr>
-            <tr>
-                <th scope="row">가입일</th>
-                <td th:text="${member.createdDate}"></td>
-            </tr>
+        <tr>
+            <th scope="row">회원이름</th>
+            <td th:text="${member.name}"></td>
+        </tr>
+        <tr>
+            <th scope="row">이메일</th>
+            <td th:text="${member.email}"></td>
+        </tr>
+        <tr>
+            <th scope="row">전화번호</th>
+            <td th:text="${member.phone}"></td>
+        </tr>
+        <tr>
+            <th scope="row">주소</th>
+            <td th:text="${member.street} + ', ' + ${member.city} + ', ' + ${member.zipcode}"></td>
+        </tr>
+        <tr>
+            <th scope="row">가입일</th>
+            <td th:text="${member.createdDate}">n.d</td>
+        </tr>
+        <tr>
+            <th scope="row">수정</th>
+            <td>
+                <a th:href="'/member/update/'+ ${member.id}" th:text="${member.name}"></a>
+            </td>
+        </tr>
         </tbody>
     </table>
-
 </div>
 </html>
