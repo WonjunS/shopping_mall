@@ -5,13 +5,13 @@ import com.example.shopping_mall.dto.JoinFormDto;
 import com.example.shopping_mall.repository.OrderRepository;
 import com.example.shopping_mall.service.MemberService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.Banner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.util.HashMap;
@@ -39,7 +39,6 @@ public class MemberController {
         if(result.hasErrors()) {
             return "member/joinForm";
         }
-
         try {
             Member member = Member.createMember(joinFormDto, passwordEncoder);
             memberService.save(member);
@@ -61,7 +60,7 @@ public class MemberController {
         model.addAttribute("members", members);
         model.addAttribute("orderCounts", orderCounts);
 
-        return "/member/memberList";
+        return "member/memberList";
     }
 
     // TODO: 회원정보 수정 구현
@@ -76,15 +75,37 @@ public class MemberController {
 
         model.addAttribute("details", details);
 
-        return "/member/memberInfo";
+        return "member/memberInfo";
+    }
+
+    // 회원 정보 수정 페이지
+    @GetMapping("/update/{memberId}")
+    public String update(@PathVariable(name = "memberId") Long memberId, Model model) {
+        try {
+            JoinFormDto joinFormDto = memberService.getMemberDetail(memberId);
+            model.addAttribute("joinFormDto", joinFormDto);
+        } catch(EntityNotFoundException e) {
+            model.addAttribute("errorMessage", "존재하지 않는 회원입니다.");
+            model.addAttribute("joinFormDto", new JoinFormDto());
+        }
+        return "member/joinForm";
     }
 
     // 회원 정보 업데이트
-    @PostMapping("/info")
-    public String memberInfoUpdate(@Valid JoinFormDto joinFormDto, Model model, Principal principal) {
-        String email = principal.getName();
+    @PostMapping("/update/{memberId}")
+    public String memberInfoUpdate(@Valid JoinFormDto joinFormDto, BindingResult bindingResult, Model model) {
+        Member member = memberService.findMember(joinFormDto.getEmail());
+        joinFormDto.setId(member.getId());
 
-
+        if(bindingResult.hasErrors()) {
+            return "member/joinForm";
+        }
+        try {
+            memberService.updateMember(joinFormDto);
+        } catch(Exception e) {
+            model.addAttribute("errorMessage", "상품 수정 중 에러가 발생했습니다.");
+            return "member/joinForm";
+        }
         return "redirect:/";
     }
 
