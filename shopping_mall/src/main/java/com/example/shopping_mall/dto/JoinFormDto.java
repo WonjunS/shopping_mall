@@ -1,6 +1,10 @@
 package com.example.shopping_mall.dto;
 
+import com.example.shopping_mall.constant.Role;
+import com.example.shopping_mall.entity.Item;
+import com.example.shopping_mall.entity.Member;
 import lombok.*;
+import org.modelmapper.ModelMapper;
 
 import javax.validation.constraints.*;
 
@@ -9,6 +13,8 @@ import javax.validation.constraints.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class JoinFormDto {
+
+    private Long id;
 
     @NotBlank(message = "이름은 필수 입력 값입니다.")
     private String name;
@@ -32,5 +38,13 @@ public class JoinFormDto {
 
     @NotBlank(message = "우편번호는 필수 입력 값입니다.")
     private String zipcode;
+
+    private Role role;
+
+    private static ModelMapper modelMapper = new ModelMapper();
+
+    public static JoinFormDto of(Member member) {
+        return modelMapper.map(member, JoinFormDto.class);
+    }
 
 }
