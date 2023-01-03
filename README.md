@@ -12,9 +12,10 @@
 
 
 **Back-End**
+- Java 11
 - Spring Boot
 - Spring Security
-- JPA
+- Spring Data JPA
 - MySQL   
 
 ### 2.2. 개발 환경
