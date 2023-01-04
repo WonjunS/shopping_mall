@@ -39,3 +39,11 @@
 ![Shopping Mall (1)](https://user-images.githubusercontent.com/93713151/209469085-d85417eb-7cab-439f-941c-1d1ccd17a29f.png)
 
 ## 4. 실행 화면
+1. 메인 페이지
+
+2. 회원가입
+![image](https://user-images.githubusercontent.com/93713151/210563800-5514d521-ec77-45f6-a1ce-055546d21399.png)  
+
+
+3. 로그인
+![image](https://user-images.githubusercontent.com/93713151/210563963-4289fd4d-8d25-46b5-ab57-3e7f13b0fef6.png)
