@@ -83,7 +83,7 @@ public class CartController {
     // 장바구니 상품 주문
     @PostMapping(value = "/cart/orders")
     @ResponseBody
-    public ResponseEntity orders(@RequestBody CartOrderDto cartOrderDto, Principal principal) {
+    public ResponseEntity orders(@RequestBody CartOrderDto cartOrderDto, Principal principal) throws Exception {
         List<CartOrderDto> cartOrderDtoList = cartOrderDto.getCartOrderDtoList();
 
         if(cartOrderDtoList == null || cartOrderDtoList.size() == 0) {
