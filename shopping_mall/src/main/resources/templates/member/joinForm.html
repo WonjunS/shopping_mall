@@ -8,6 +8,11 @@
         .fieldError {
             color: #bd2130;
         }
+
+        #join_form {
+            margin: 0 auto;
+            width: 50%;
+        }
     </style>
 </th:block>
 
@@ -55,21 +60,82 @@
             }).open();
         }
     </script>
+    <script>
+        $(function() {
+            var email_auth_cd = '';
+
+            $('#join').click(function () {
+                if ($('#emailAuthKey').val() != email_auth_cd) {
+                    alert("인증번호가 일치하지 않습니다.");
+                    return false;
+                }
+            });
+            $(".emailAuthBtn").click(function () {
+                var email = $('#email').val();
+
+                if (email == '') {
+                    alert("이메일을 입력해주세요.");
+                    return false;
+                }
+
+                $.ajax({
+                    type: "GET",
+                    url: "/member/emailAuth",
+                    data: {"email" : email},
+                    success: function (data) {
+                        alert("인증번호가 발송되었습니다.");
+                        email_auth_cd = data;
+                        $("#emailAuthKey").attr("disabled",false);
+                        $("#emailCheckBtn").css("display","inline-block");
+                        $(".successEmailChk").text("인증번호를 입력한 뒤 이메일 인증을 눌러주십시오.");
+                        $(".successEmailChk").css("color","green");
+                    },
+                    error: function (data) {
+                        alert("메일 발송에 실패했습니다.");
+                        console.log(data);
+                    }
+                });
+            });
+            $("#emailCheckBtn").click(function () {
+                if($("#emailAuthKey").val() == email_auth_cd) {
+                    $(".successEmailChk").text("인증번호가 일치합니다.");
+                    $(".successEmailChk").css("color", "green");
+                    $("#emailDoubleChk").val("true");
+                    $("#emailAuthKey").attr("disabled",true);
+                }else{
+                    $(".successEmailChk").text("인증번호가 일치하지 않습니다. 확인해주시기 바랍니다.");
+                    $(".successEmailChk").css("color", "red");
+                    $("#emailDoubleChk").val("false");
+                    $("#emailAuthKey").attr("autofocus",true);
+                }
+            });
+        });
+
+
+    </script>
 </th:block>
 
 <div layout:fragment="content">
-    <form action="/member/new" role="form" method="post" th:object="${joinFormDto}">
+    <form action="/member/new" role="form" method="post" th:object="${joinFormDto}" id="join_form">
         <div class="form-group">
             <label th:for="name">이름</label>
             <input type="text" th:field="*{name}" class="form-control" placeholder="이름을 입력해주세요">
             <p th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="fieldError">Incorrect data</p>
         </div>
         <div class="form-group">
-            <label th:for="email">이메일주소</label>
-            <input type="email" th:field="*{email}" class="form-control" placeholder="이메일을 입력해주세요">
+            <input id="email" type="email" th:field="*{email}" class="form-control email" style="width: 50%; display: inline;" placeholder="이메일을 입력해주세요">
             <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="fieldError">Incorrect data</p>
+            <button type="button" id="emailAuthBtn" class="emailAuthBtn">인증번호 받기</button>
         </div>
-        <div class="form-group" th:if="${#strings.isEmpty(joinFormDto.email)}">
+        <div class="form-group">
+            <input type="text" placeholder="인증번호 입력" class="form-control" id="emailAuthKey" style="width: 50%; display: inline;">
+            <button type="button" id="emailCheckBtn" class="emailCheckBtn">이메일 인증</button>
+            <span class="point successEmailChk">이메일 입력후 인증번호 받기를 눌러주세요.</span>
+            <input type="hidden" id="emailDoubleChk"/>
+        </div>
+
+<!--        <div class="form-group" th:if="${#strings.isEmpty(joinFormDto.email)}">-->
+        <div class="form-group">
             <label th:for="password">비밀번호</label>
             <input type="password" th:field="*{password}" class="form-control" placeholder="비밀번호를 입력해주세요">
             <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="fieldError">Incorrect data</p>
@@ -100,7 +166,7 @@
             <p th:if="${#fields.hasErrors('street')}" th:errors="*{street}" class="fieldError">Incorrect data</p>
         </div>
         <div th:if="${#strings.isEmpty(joinFormDto.email)}" style="text-align: center">
-            <button th:formaction="@{/member/new}" type="submit" class="btn btn-primary">저장</button>
+            <button id="join" th:formaction="@{/member/new}" type="submit" class="btn btn-primary">저장</button>
         </div>
         <div th:unless="${#strings.isEmpty(joinFormDto.email)}" style="text-align: center">
             <button th:formaction="@{'/member/update/' + ${joinFormDto.id}}" type="submit" class="btn btn-primary">수정</button>

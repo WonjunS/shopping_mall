@@ -4,9 +4,7 @@
       layout:decorate="~{layouts/mainLayout}">
 
 <div layout:fragment="content">
-
     <h2 class="mb-4">회원 정보</h2>
-
     <table class="table table-hover">
         <tbody th:each="member : ${details}">
         <tr>
@@ -32,10 +30,11 @@
         <tr>
             <th scope="row">수정</th>
             <td>
-                <a th:href="'/member/update/'+ ${member.id}" th:text="${member.name}"></a>
+                <a th:href="'/member/update/'+ ${member.id}" th:text="'회원정보 수정하기'"></a>
             </td>
         </tr>
         </tbody>
     </table>
+    <a class="btn btn-primary" href="#" role="button">Link</a>
 </div>
 </html>
