@@ -3,14 +3,19 @@ package com.example.shopping_mall.controller;
 import com.example.shopping_mall.entity.Member;
 import com.example.shopping_mall.dto.JoinFormDto;
 import com.example.shopping_mall.repository.OrderRepository;
+import com.example.shopping_mall.service.MailService;
 import com.example.shopping_mall.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import java.security.Principal;
@@ -26,6 +31,7 @@ public class MemberController {
     private final MemberService memberService;
     private final PasswordEncoder passwordEncoder;
     private final OrderRepository orderRepository;
+    private final MailService mailService;
 
     // 회원가입 페이지
     @GetMapping("/new")
@@ -47,6 +53,15 @@ public class MemberController {
             return "member/joinForm";
         }
         return "redirect:/";
+    }
+
+    // https://unknown-coding.tistory.com/15
+    @RequestMapping(value = "/emailAuth", method = RequestMethod.GET)
+    @ResponseBody
+    public String emailAuth(@RequestParam("email") String email) throws Exception {
+        String code = mailService.sendVerificationCode(email);
+        System.out.println(code);
+        return code;
     }
 
     @GetMapping("/list")
