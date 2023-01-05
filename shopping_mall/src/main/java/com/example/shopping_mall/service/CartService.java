@@ -82,7 +82,7 @@ public class CartService {
     }
 
     // 장바구니에 있는 상품들 주문
-    public Long orderCartItem(List<CartOrderDto> cartOrderDtoList, String email) {
+    public Long orderCartItem(List<CartOrderDto> cartOrderDtoList, String email) throws Exception {
 
         List<OrderDto> orderDtoList = new ArrayList<>();
 
