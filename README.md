@@ -38,12 +38,14 @@
 
 
 ## 4. 실행 화면
-### 메인 페이지
-**메인 페이지**
+<details><summary>메인 페이지</summary>
 
-### 회원가입
-**회원가입 페이지**
-  
+</details>  
+
+
+
+<details><summary>회원가입</summary>
+
   <img src="https://user-images.githubusercontent.com/93713151/211153727-8cf352e0-586a-45e6-9712-abfe73f244a0.png" width="390px" height="380px">
 
   <img src="https://user-images.githubusercontent.com/93713151/211154272-a32e7091-6844-4a41-9cea-2ac2027697ae.png" width="390px" height="420px">
@@ -53,19 +55,29 @@
   <img src="https://user-images.githubusercontent.com/93713151/211154823-d9e9438d-3b02-458f-ad8b-ed31dc7d75e7.png" width="390px" height="380px">
   
   <img src="https://user-images.githubusercontent.com/93713151/211154983-aa8f7e39-fef5-4871-b78e-ca917da64b2b.png" width="390px" height="450px">  
+
+</details>
   
-  
-### 로그인
+<details><summary>로그인</summary>
 
   <img src="https://user-images.githubusercontent.com/93713151/211155668-089332af-5903-419a-88ae-636627267e96.png" width="390px" height="180px">
   
   <img src="https://user-images.githubusercontent.com/93713151/211155714-48c98253-6816-4910-98b3-433d3f0f24ee.png" width="390px" height="160px">
 
+</details>  
 
 
-### 장바구니
 
-### 주문
+<details><summary>장바구니</summary>
+
+
+</details>  
+
+
+
+<details><summary>주문</summary>
+
+</details>
 
 
 ## 5. 보완사항 및 후기
