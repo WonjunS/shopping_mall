@@ -1,7 +1,7 @@
 package com.example.shopping_mall.dto;
 
 import com.example.shopping_mall.constant.OrderStatus;
-import com.example.shopping_mall.domain.Order;
+import com.example.shopping_mall.entity.Order;
 import lombok.Getter;
 import lombok.Setter;
 

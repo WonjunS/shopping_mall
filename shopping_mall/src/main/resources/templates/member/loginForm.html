@@ -8,18 +8,22 @@
         .error {
             color: #bd2130;
         }
+        #login_form {
+            width: 50%;
+            margin: 0 auto;
+        }
     </style>
 </th:block>
 
 <div layout:fragment="content">
-    <form role="form" method="post" action="/member/login">
+    <form role="form" method="post" action="/member/login" id="login_form">
         <div class="form-group">
             <label th:for="email">이메일주소</label>
             <input type="email" name="email" class="form-control" placeholder="이메일을 입력해주세요">
         </div>
         <div class="form-group">
             <label th:for="password">비밀번호</label>
-            <input type="password" name="password" id="password" class="form-control" placeholder="비밀번호 입력">
+            <input type="password" name="password" id="password" class="form-control" placeholder="비밀번호를 입력해주세요">
         </div>
         <p th:if="${loginErrorMsg}" class="error" th:text="${loginErrorMsg}"></p>
         <button type="submit" class="btn btn-primary">로그인</button>

@@ -1,6 +1,6 @@
 package com.example.shopping_mall.repository;
 
-import com.example.shopping_mall.domain.Order;
+import com.example.shopping_mall.entity.Order;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

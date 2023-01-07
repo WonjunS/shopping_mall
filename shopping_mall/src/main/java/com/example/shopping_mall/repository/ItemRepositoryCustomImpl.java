@@ -1,9 +1,9 @@
 package com.example.shopping_mall.repository;
 
 import com.example.shopping_mall.constant.ItemSellStatus;
-import com.example.shopping_mall.domain.Item;
-import com.example.shopping_mall.domain.QItem;
-import com.example.shopping_mall.domain.QItemImg;
+import com.example.shopping_mall.entity.Item;
+import com.example.shopping_mall.entity.QItem;
+import com.example.shopping_mall.entity.QItemImg;
 import com.example.shopping_mall.dto.ItemSearchDto;
 import com.example.shopping_mall.dto.MainItemDto;
 import com.example.shopping_mall.dto.QMainItemDto;

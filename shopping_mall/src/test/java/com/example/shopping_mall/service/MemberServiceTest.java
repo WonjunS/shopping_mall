@@ -1,6 +1,6 @@
 package com.example.shopping_mall.service;
 
-import com.example.shopping_mall.domain.Member;
+import com.example.shopping_mall.entity.Member;
 import com.example.shopping_mall.dto.JoinFormDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

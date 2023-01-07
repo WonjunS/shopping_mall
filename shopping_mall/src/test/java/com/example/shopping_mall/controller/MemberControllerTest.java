@@ -1,6 +1,6 @@
 package com.example.shopping_mall.controller;
 
-import com.example.shopping_mall.domain.Member;
+import com.example.shopping_mall.entity.Member;
 import com.example.shopping_mall.dto.JoinFormDto;
 import com.example.shopping_mall.service.MemberService;
 import org.junit.jupiter.api.DisplayName;
@@ -13,7 +13,6 @@ import org.springframework.security.test.web.servlet.response.SecurityMockMvcRes
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.formLogin;
 
 @SpringBootTest

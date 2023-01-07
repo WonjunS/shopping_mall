@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<body>
+<div align="center" style="font-size: 15px">
+    <h5>고객님의 주문이 접수되었습니다.</h5>
+    <br>
+
+    <h4 style="font-weight: bold">주문정보</h4>
+    <p th:text="${order.getId()}"></p>
+    <p th:text="${#temporals.format(order.getCreatedDate(), 'yyyy-MM-dd HH:mm:ss')}"></p>
+
+    <h4 style="font-weight: bold">주문내역</h4>
+    <table border="1" class="table">
+        <thead>
+            <tr>
+                <th style="width: 150px" scope="col">상품 이름</th>
+                <th style="width: 50px" scope="col">수량</th>
+                <th style="width: 100px" scope="col">가격</th>
+            </tr>
+        </thead>
+        <tbody th:each="orderItem : ${orderItems}">
+            <tr align="center">
+                <td th:text="${orderItem.item.getItemName()}"></td>
+                <td th:text="${orderItem.count}"></td>
+                <td th:text="${orderItem.orderPrice}"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p th:text="${order.getTotalPrice()}"></p>
+</div>
+</body>
+</html>

@@ -1,6 +1,6 @@
 package com.example.shopping_mall.service;
 
-import com.example.shopping_mall.domain.*;
+import com.example.shopping_mall.entity.*;
 import com.example.shopping_mall.dto.MailDto;
 import com.example.shopping_mall.dto.OrderDto;
 import com.example.shopping_mall.dto.OrderHistDto;
@@ -33,7 +33,7 @@ public class OrderService {
     private final MailService mailService;
 
     // 주문 하기
-    public Long order(OrderDto orderDto, String email) {
+    public Long order(OrderDto orderDto, String email) throws Exception {
         Item item = itemRepository.findById(orderDto.getItemId())
                 .orElseThrow(EntityNotFoundException::new);
 
@@ -47,11 +47,7 @@ public class OrderService {
         Order order = Order.createOrder(member, orderItemList);
         orderRepository.save(order);
 
-        MailDto mailDto = new MailDto();
-        mailDto.setAddress(member.getEmail());
-        mailDto.setTitle("Your order");
-        mailDto.setMessage(Integer.toString(order.getTotalPrice()));
-        mailService.mailSend(mailDto);
+        mailService.mailSend(orderItemList, email, order);
 
         return order.getId();
     }
@@ -95,7 +91,7 @@ public class OrderService {
     }
 
     // 장바구니 상품들 주문
-    public Long orders(List<OrderDto> orderDtoList, String email) {
+    public Long orders(List<OrderDto> orderDtoList, String email) throws Exception {
         Member member = memberRepository.findByEmail(email);
 
         List<OrderItem> orderItemList = new ArrayList<>();
@@ -108,11 +104,7 @@ public class OrderService {
         Order order = Order.createOrder(member, orderItemList);
         orderRepository.save(order);
 
-        MailDto mailDto = new MailDto();
-        mailDto.setAddress(member.getEmail());
-        mailDto.setTitle("Your order");
-        mailDto.setMessage(Integer.toString(order.getTotalPrice()));
-        mailService.mailSend(mailDto);
+        mailService.mailSend(orderItemList, email, order);
 
         return order.getId();
     }
