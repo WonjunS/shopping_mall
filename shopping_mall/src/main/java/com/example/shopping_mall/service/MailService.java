@@ -43,10 +43,10 @@ public class MailService {
         String setTo = email;
         String title = "이메일 인증 코드입니다";
         String content = "홈페이지를 방문해주셔서 감사합니다." +
-                        "<br><br>" +
-                        "인증 번호는 " + code + "입니다." +
-                        "<br>" +
-                        "해당 인증번호를 인증번호 확인란에 기입하여 주세요.";
+                        "\n\n" +
+                        "인증코드는 " + code + "입니다." +
+                        "\n" +
+                        "해당 인증코드를 인증번호 확인란에 기입하여 주세요.";
 
         try {
             MimeMessage message = mailSender.createMimeMessage();
@@ -69,12 +69,6 @@ public class MailService {
         context.setVariable("orderItems", orderItems);
         context.setVariable("order", order);
         return templateEngine.process("mail", context);
-    }
-
-    private String setContext(String code) {
-        Context context = new Context();
-        context.setVariable("code", code);
-        return templateEngine.process("emailVerification", context);
     }
 
     // 인증번호 생성
