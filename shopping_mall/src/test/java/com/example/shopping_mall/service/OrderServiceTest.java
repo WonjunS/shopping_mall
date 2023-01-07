@@ -56,7 +56,7 @@ class OrderServiceTest {
 
     @Test
     @DisplayName("주문 기능 테스트")
-    void order() {
+    void order() throws Exception {
         Item item = saveItem();
         Member member = saveMember();
 
@@ -77,7 +77,7 @@ class OrderServiceTest {
 
     @Test
     @DisplayName("주문 취소 테스트")
-    void cancel() {
+    void cancel() throws Exception {
         Item item = saveItem();
         Member member = saveMember();
 
