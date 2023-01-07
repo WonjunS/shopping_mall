@@ -39,21 +39,29 @@
 
 ## 4. 실행 화면
 ### 메인 페이지
-1. 메인 페이지
+**메인 페이지**
 
 ### 회원가입
-1. 회원가입 페이지
-
-![image](https://user-images.githubusercontent.com/93713151/211153418-fdc5dc6f-8dab-4728-9a06-c5d305bbf998.png){: width="30%" height="50%"}
-
+**회원가입 페이지**
   
+  <img src="https://user-images.githubusercontent.com/93713151/211153727-8cf352e0-586a-45e6-9712-abfe73f244a0.png" width="390px" height="380px">
 
-2. 
-
-회원가입 시에 유효성 검사 및 중복검사를 진행하며 회원가입 완료 시에 메인 페이지로 이동한다.
-
+  <img src="https://user-images.githubusercontent.com/93713151/211154272-a32e7091-6844-4a41-9cea-2ac2027697ae.png" width="390px" height="420px">
+  
+  <img src="https://user-images.githubusercontent.com/93713151/211154696-983973df-fd1b-4bf8-bff6-2afce08ff5a5.png" width="390px" height="420px">
+  
+  <img src="https://user-images.githubusercontent.com/93713151/211154823-d9e9438d-3b02-458f-ad8b-ed31dc7d75e7.png" width="390px" height="380px">
+  
+  <img src="https://user-images.githubusercontent.com/93713151/211154983-aa8f7e39-fef5-4871-b78e-ca917da64b2b.png" width="390px" height="450px">  
+  
+  
 ### 로그인
-![image](https://user-images.githubusercontent.com/93713151/210563963-4289fd4d-8d25-46b5-ab57-3e7f13b0fef6.png)
+
+  <img src="https://user-images.githubusercontent.com/93713151/211155668-089332af-5903-419a-88ae-636627267e96.png" width="390px" height="180px">
+  
+  <img src="https://user-images.githubusercontent.com/93713151/211155714-48c98253-6816-4910-98b3-433d3f0f24ee.png" width="390px" height="160px">
+
+
 
 ### 장바구니
 
