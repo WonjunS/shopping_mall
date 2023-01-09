@@ -71,7 +71,7 @@
                 }
             });
             $(".emailAuthBtn").click(function () {
-                var mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+                var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
                 var email = $('#email').val();
 
                 if (email == '') {
@@ -91,7 +91,9 @@
                     success: function (data) {
                         alert("인증번호가 발송되었습니다.");
                         email_auth_cd = data;
-                        $("#emailAuthKey").attr("disabled",false);
+                        $("#emailAuthKey").attr("disabled", false);
+                        $("#emailAuthKey").focus();
+                        $("#emailCheckBtn").attr("disabled", false);
                         // $(".successEmailChk").text("인증번호를 입력한 뒤 이메일 인증을 눌러주십시오.");
                         // $(".successEmailChk").css("color","green");
                     },
@@ -107,18 +109,16 @@
                     // $(".successEmailChk").text("인증번호가 일치합니다.");
                     // $(".successEmailChk").css("color", "green");
                     $("#emailDoubleChk").val("true");
-                    $("#emailAuthKey").attr("disabled",true);
-                }else{
+                    $("#emailAuthKey").attr("disabled", true);
+                } else {
                     alert("인증번호가 일치하지 않습니다.");
                     // $(".successEmailChk").text("인증번호가 일치하지 않습니다. 확인해주시기 바랍니다.");
                     // $(".successEmailChk").css("color", "red");
                     $("#emailDoubleChk").val("false");
-                    $("#emailAuthKey").attr("autofocus",true);
+                    $("#emailAuthKey").attr("autofocus", true);
                 }
             });
         });
-
-
     </script>
 </th:block>
 
@@ -146,8 +146,8 @@
                 <input type="text" placeholder="인증번호 입력" class="form-control" id="emailAuthKey">
             </div>
             <div class="col">
-                <button type="button" id="emailCheckBtn" class="emailCheckBtn btn btn-light">인증하기</button>
-                <input type="hidden" id="emailDoubleChk"/>
+                <button type="button" id="emailCheckBtn" class="emailCheckBtn btn btn-light" disabled="disabled">인증하기</button>
+                <input type="hidden" id="emailDoubleChk">
             </div>
         </div>
 
@@ -156,7 +156,7 @@
             <input type="password" th:field="*{password}" class="form-control" placeholder="비밀번호를 입력해주세요">
             <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="fieldError">Incorrect data</p>
         </div>
-        <div class="form-group" th:unless="${#strings.isEmpty(joinFormDto.email)}">
+        <div class="form-group" th:unless="${#strings.isEmpty(joinFormDto.id)}">
             <input type="hidden" th:value="${joinFormDto.password}" th:field="*{password}">
             <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="fieldError">Incorrect data</p>
         </div>
@@ -182,7 +182,7 @@
             <p th:if="${#fields.hasErrors('street')}" th:errors="*{street}" class="fieldError">Incorrect data</p>
         </div>
         <div th:if="${#strings.isEmpty(joinFormDto.id)}" style="text-align: center">
-            <button id="join" th:formaction="@{/member/new}" type="submit" class="btn btn-primary">가입하기</button>
+            <button id="join" th:formaction="@{/member/new}" type="submit" class="btn btn-primary">가입</button>
         </div>
         <div th:unless="${#strings.isEmpty(joinFormDto.id)}" style="text-align: center">
             <button th:formaction="@{'/member/update/' + ${joinFormDto.id}}" type="submit" class="btn btn-primary">수정</button>
