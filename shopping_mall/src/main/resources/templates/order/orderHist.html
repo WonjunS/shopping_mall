@@ -99,7 +99,7 @@
                             th:value="${order.orderId}" onclick="cancelOrder(this.value)">주문취소</button>
                 </th:block>
                 <th:block th:unless="${order.orderStatus == T(com.example.shopping_mall.constant.OrderStatus).ORDER}">
-                    <h6 style="margin-top : 6px">(취소 완료)</h6>
+                    <span class="badge badge-danger">Cancelled</span>
                 </th:block>
             </div>
         </div>
