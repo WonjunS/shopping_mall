@@ -35,11 +35,6 @@ dependencies {
     implementation 'com.querydsl:querydsl-jpa:5.0.0'
     implementation 'com.querydsl:querydsl-apt:5.0.0'
 
-//    annotationProcessor(
-//            "javax.persistence:javax.persistence-api",
-//            "javax.annotation:javax.annotation-api",
-//            "com.querydsl:querydsl-apt:5.0.0:jpa")
-
     runtimeOnly 'mysql:mysql-connector-java'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -53,24 +48,24 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
-def querydslDir = "$buildDir/generated/querydsl" // (3)
+def querydslDir = "$buildDir/generated/querydsl"
 
-querydsl { // (4)
+querydsl {
     jpa = true
     querydslSourcesDir = querydslDir
 }
 
-sourceSets { // (5)
+sourceSets {
     main.java.srcDir querydslDir
 }
 
-configurations { // (6)
+configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
     querydsl.extendsFrom compileClasspath
 }
 
-compileQuerydsl { // (7)
+compileQuerydsl {
     options.annotationProcessorPath = configurations.querydsl
 }

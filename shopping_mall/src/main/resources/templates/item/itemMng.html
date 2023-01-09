@@ -54,7 +54,7 @@
                     <a th:href="'/admin/item/'+ ${item.id}" th:text="${item.itemName}"></a>
                 </td>
                 <td th:text="${item.itemSellStatus == T(com.example.shopping_mall.constant.ItemSellStatus).SELL} ? '판매중' : '품절'"></td>
-                <td th:text="${item.createdDate}"></td>
+                <td th:text="${#temporals.format(item.createdDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
             </tr>
             </tbody>
         </table>
@@ -100,7 +100,11 @@
                 <option value="createdBy">등록자</option>
             </select>
             <input th:field="*{searchQuery}" type="text" class="form-control" placeholder="검색어를 입력해주세요">
-            <button id="searchBtn" type="submit" class="btn btn-primary">검색</button>
+            <button id="searchBtn" type="submit" class="btn btn-primary" style="margin-left: 10px">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                </svg> 검색
+            </button>
         </div>
     </form>
 

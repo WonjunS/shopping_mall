@@ -3,8 +3,17 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/mainLayout}">
 
-<div layout:fragment="content">
-    <h2 class="mb-4">회원 정보</h2>
+<th:block layout:fragment="css">
+    <style>
+        #container {
+            width: 50%;
+            margin: 0 auto;
+        }
+    </style>
+</th:block>
+
+<div layout:fragment="content" id="container">
+    <h2 class="mb-4" style="margin-top: 50px" th:text="${name} + '님의 회원정보'">회원 정보</h2>
     <table class="table table-hover">
         <tbody th:each="member : ${details}">
         <tr>
@@ -25,16 +34,10 @@
         </tr>
         <tr>
             <th scope="row">가입일</th>
-            <td th:text="${member.createdDate}">n.d</td>
-        </tr>
-        <tr>
-            <th scope="row">수정</th>
-            <td>
-                <a th:href="'/member/update/'+ ${member.id}" th:text="'회원정보 수정하기'"></a>
-            </td>
+            <td th:text="${#temporals.format(member.createdDate, 'yyyy-MM-dd HH:mm:ss')}">n.d</td>
         </tr>
         </tbody>
     </table>
-    <a class="btn btn-primary" href="#" role="button">Link</a>
+    <a role="button" class="btn btn-primary" th:href="'/member/update/' + ${id}">수정하기</a>
 </div>
 </html>
