@@ -6,16 +6,12 @@ import com.example.shopping_mall.repository.OrderRepository;
 import com.example.shopping_mall.service.MailService;
 import com.example.shopping_mall.service.MemberService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
 import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import java.security.Principal;
@@ -40,6 +36,16 @@ public class MemberController {
         return "member/joinForm";
     }
 
+    // 생성된 이메일 인증 코드를 리턴
+    @RequestMapping(value = "/emailAuth", method = RequestMethod.GET)
+    @ResponseBody
+    public String emailAuth(@RequestParam("email") String email) throws Exception {
+        String code = mailService.sendVerificationCode(email);
+        System.out.println(code);
+        return code;
+    }
+
+    // 회원가입 폼에 있는 정보를 MySQL db에 저장
     @PostMapping("/new")
     public String createMember(@Valid JoinFormDto joinFormDto, BindingResult result, Model model) {
         if(result.hasErrors()) {
@@ -55,15 +61,7 @@ public class MemberController {
         return "redirect:/";
     }
 
-    // https://unknown-coding.tistory.com/15
-    @RequestMapping(value = "/emailAuth", method = RequestMethod.GET)
-    @ResponseBody
-    public String emailAuth(@RequestParam("email") String email) throws Exception {
-        String code = mailService.sendVerificationCode(email);
-        System.out.println(code);
-        return code;
-    }
-
+    // 회원 목록 불러오기 (Admin 계정에서만 확인 가능)
     @GetMapping("/list")
     public String List(Model model) {
         List<Member> members = memberService.findMembers();
@@ -78,10 +76,6 @@ public class MemberController {
         return "member/memberList";
     }
 
-    // TODO: 회원정보 수정 구현
-    // 참고 링크: https://mycodearchive.tistory.com/213
-    // https://parkground.tistory.com/722
-
     // 회원 정보 불러오기
     @GetMapping("/info")
     public String memberInfo(Model model, Principal principal) {
@@ -89,6 +83,8 @@ public class MemberController {
         Member details = memberService.findMember(email);
 
         model.addAttribute("details", details);
+        model.addAttribute("name", details.getName());
+        model.addAttribute("id", details.getId());
 
         return "member/memberInfo";
     }
