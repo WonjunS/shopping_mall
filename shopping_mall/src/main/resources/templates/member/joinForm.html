@@ -132,13 +132,18 @@
         <div class="form-group">
             <label th:for="email">이메일</label>
         </div>
-        <div class="form-row">
+        <div class="form-row" th:if="${#strings.isEmpty(joinFormDto.id)}">
             <div class="col-8">
                 <input id="email" type="email" th:field="*{email}" class="form-control email" placeholder="이메일을 입력해주세요">
                 <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="fieldError">Incorrect data</p>
             </div>
-            <div class="col" th:if="${#strings.isEmpty(joinFormDto.id)}">
+            <div class="col">
                 <button type="button" id="emailAuthBtn" class="emailAuthBtn btn btn-light">인증번호 받기</button>
+            </div>
+        </div>
+        <div class="form-row" th:unless="${#strings.isEmpty(joinFormDto.id)}">
+            <div class="col-8">
+                <input type="email" th:field="*{email}" class="form-control email" placeholder="이메일을 입력해주세요" readonly>
             </div>
         </div>
         <div class="form-row" th:if="${#strings.isEmpty(joinFormDto.id)}">
@@ -151,7 +156,7 @@
             </div>
         </div>
 
-        <div class="form-group" style="margin-top: 20px">
+        <div class="form-group" th:if="${#strings.isEmpty(joinFormDto.id)}" style="margin-top: 20px">
             <label th:for="password">비밀번호</label>
             <input type="password" th:field="*{password}" class="form-control" placeholder="비밀번호를 입력해주세요">
             <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="fieldError">Incorrect data</p>
