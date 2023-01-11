@@ -101,7 +101,8 @@
   
   회원정보를 확인하는 페이지입니다. 수정하기 버튼을 클릭해서 회원정보를 수정할 수 있습니다.
   
-  <img src="https://user-images.githubusercontent.com/93713151/211207836-fcc1d576-d253-4553-8543-788c7b56d76d.png" width="780px" height="800px">
+
+  <img src="https://user-images.githubusercontent.com/93713151/211830638-1b66f790-5b8c-4033-b4c3-1a3cd4dcd0ef.png" width="780px" height="700px">
 
   <img src="https://user-images.githubusercontent.com/93713151/211209735-5d2cd1e9-2afe-4d8c-8c09-0fd6b971163d.png" width="390px" height="180px">
   
