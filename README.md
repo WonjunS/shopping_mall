@@ -118,8 +118,13 @@
   #### 상품 등록 페이지
   <img src = "https://user-images.githubusercontent.com/93713151/211206330-4ade9b54-965e-40b5-81c4-3903b5a8116a.png" width="390px" height="400px">
   
+  상품을 등록하는 페이지입니다. 상품의 이미지는 최대 5장까지 업로드 가능하며 상품을 등록하기 위해서는 이름, 가격, 수량, 최소 1장의 이미지등의 데이터를 입력해야합니다.
+  
+  
   #### 상품 수정 페이지
   ![image](https://user-images.githubusercontent.com/93713151/211207574-1e44b59c-c016-42c8-8691-800cebe899c0.png)
+  
+  상품을 수정하는 페이지입니다. 상품 리스트에서 상품 이름을 클릭하면 수정 페이지로 이동합니다.
 
   
   <img src = "https://user-images.githubusercontent.com/93713151/211206014-eb161a2f-1f0e-4f2d-95cc-e51f689da63d.png" width="390px" height="400px">
