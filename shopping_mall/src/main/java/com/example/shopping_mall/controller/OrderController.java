@@ -1,7 +1,9 @@
 package com.example.shopping_mall.controller;
 
-import com.example.shopping_mall.dto.OrderDto;
-import com.example.shopping_mall.dto.OrderHistDto;
+import com.example.shopping_mall.dto.*;
+import com.example.shopping_mall.entity.Member;
+import com.example.shopping_mall.repository.MemberRepository;
+import com.example.shopping_mall.service.CartService;
 import com.example.shopping_mall.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -24,6 +26,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class OrderController {
 
+    private final CartService cartService;
+    private final MemberRepository memberRepository;
     private final OrderService orderService;
 
     // 주문하기
@@ -50,6 +54,19 @@ public class OrderController {
         return new ResponseEntity<Long>(orderId, HttpStatus.OK);
     }
 
+    // 장바구니 페이지
+    @GetMapping(value = "/cart")
+    public String cartPage(Principal principal, Model model) {
+        List<CartListDto> cartListDtos = cartService.getCartList(principal.getName());
+        Member member = memberRepository.findByEmail(principal.getName());
+        JoinFormDto joinFormDto = JoinFormDto.of(member);
+
+        model.addAttribute("cartItems", cartListDtos);
+        model.addAttribute("joinFormDto", joinFormDto);
+
+        return "cart/cartList";
+    }
+
     // 주문 내역 조회
     @GetMapping(value = {"/orders", "/orders/{page}"})
     public String orderHist(@PathVariable(value = "page") Optional<Integer> page, Principal principal, Model model) {
@@ -61,6 +78,11 @@ public class OrderController {
         model.addAttribute("maxPage", 5);
 
         return "order/orderHist";
+    }
+
+    @GetMapping("/order/payment")
+    public String kakaoPayment() {
+        return "kakaoPay";
     }
 
     // 주문 취소
