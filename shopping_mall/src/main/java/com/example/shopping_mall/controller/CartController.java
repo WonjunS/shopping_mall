@@ -3,6 +3,9 @@ package com.example.shopping_mall.controller;
 import com.example.shopping_mall.dto.CartItemDto;
 import com.example.shopping_mall.dto.CartListDto;
 import com.example.shopping_mall.dto.CartOrderDto;
+import com.example.shopping_mall.dto.JoinFormDto;
+import com.example.shopping_mall.entity.Member;
+import com.example.shopping_mall.repository.MemberRepository;
 import com.example.shopping_mall.service.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,10 +24,11 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CartController {
 
+    private final MemberRepository memberRepository;
     private final CartService cartService;
 
     // 장바구니 담기
-    @PostMapping(value = "/cart")
+    @PostMapping(value = "/checkout")
     @ResponseBody
     public ResponseEntity cart(@RequestBody @Valid CartItemDto cartItemDto,
                                BindingResult bindingResult, Principal principal) {
@@ -47,12 +51,17 @@ public class CartController {
         return new ResponseEntity<Long>(cartItemId, HttpStatus.OK);
     }
 
-    // 장바구니 조회
-    @GetMapping(value = "/cart")
+    // 체크아웃 페이지
+    @GetMapping(value = "/checkout")
     public String cartList(Principal principal, Model model) {
         List<CartListDto> cartListDtos = cartService.getCartList(principal.getName());
+        Member member = memberRepository.findByEmail(principal.getName());
+        JoinFormDto joinFormDto = JoinFormDto.of(member);
+
         model.addAttribute("cartItems", cartListDtos);
-        return "cart/cartList";
+        model.addAttribute("joinFormDto", joinFormDto);
+
+        return "order/orderCheckout";
     }
 
     // 장바구니 수량 변경
