@@ -14,7 +14,7 @@
     <script th:inline="javascript">
 
         $(document).ready(function(){
-            $("input[name=cartChkBox]").change( function(){
+            $("input[name=cartChkBox]:checked").change( function(){
                 getOrderTotalPrice();
             });
         });
@@ -23,7 +23,7 @@
         function getOrderTotalPrice(){
             var orderTotalPrice = 0;
             const numberFormatter = Intl.NumberFormat('en-US');
-            $("input[name=cartChkBox]").each(function() {
+            $("input[name=cartChkBox]:checked").each(function() {
                 var cartItemId = $(this).val();
                 var price = $("#price_" + cartItemId).attr("data-price");
                 var count = $("#count_" + cartItemId).val();
@@ -31,16 +31,6 @@
             });
             orderTotalPrice = numberFormatter.format(orderTotalPrice);
             $("#orderTotalPrice").html(orderTotalPrice + '원');
-        }
-
-        // 전체선택 또는 전체해제
-        function checkAll(){
-            if($("#checkall").prop("checked")){
-                $("input[name=cartChkBox]").prop("checked", true);
-            }else{
-                $("input[name=cartChkBox]").prop("checked", false);
-            }
-            getOrderTotalPrice();
         }
 
         // 상품 수량 변경
@@ -85,11 +75,43 @@
             });
         }
 
-        function orders () {
+        // 결제하기
+        function orders() {
+            var dataList = new Array();
+
+            var orderTotalPrice = 0;
+            $("input[name=cartChkBox]").each(function () {
+                var cartItemId = $(this).val();
+                var data = new Object();
+
+                var price = $("#price_" + cartItemId).attr("data-price");
+                var count = $("#count_" + cartItemId).val();
+                orderTotalPrice += price * count;
+
+                data["cartItemId"] = cartItemId;
+                dataList.push(data);
+            });
+
+            if (orderTotalPrice == 0) {
+                alert("상품을 최소 1개 이상 주문해야 합니다.");
+                location.href='/checkout';
+                return false;
+            }
+
+            var value = $("input[type=radio][name=payment_method]:checked").val();
+
+            if(value === 'credit_card') {
+                kgInicis();
+            }
+
+            if(value === 'kakaopay') {
+                kakaoPay();
+            }
+        }
+
+        function kakaoPay() {
             var token = $("meta[name='_csrf']").attr("content");
             var header = $("meta[name='_csrf_header']").attr("content");
-
-            var url = "/cart/orders";
 
             var dataList = new Array();
             var paramData = new Object();
@@ -117,62 +139,153 @@
 
             var param = JSON.stringify(paramData);
 
-            if (orderTotalPrice == 0) {
-                alert("상품을 최소 1개 이상 주문해야 합니다.");
-                location.href='/checkout';
-                return false;
-            }
-
             var IMP = window.IMP;
             IMP.init('imp84048403');
             IMP.request_pay({
                 pg: 'kakaopay.TC0ONETIME',
                 pay_method: 'card',
                 merchant_uid: 'merchant_' + new Date().getTime(),
-                name: '주문명 : 아메리카노',
+                name: 'Cat Mall',
                 amount: orderTotalPrice,
                 buyer_email: email,
                 buyer_name: name,
                 buyer_tel: phone,
                 buyer_addr: address,
-                buyer_postcode: '123-456',
+                buyer_postcode: zipcode,
             }, function (rsp) {
                 console.log(rsp);
-                if (rsp.success) {
-                    var msg = '결제가 완료되었습니다.';
-                    msg += '결제 금액 : ' + rsp.paid_amount;
-                    alert(msg);
+                $.ajax({
+                    type: 'POST',
+                    url: '/verifyIamport/' + rsp.imp_uid,
+                    beforeSend: function(xhr){
+                        xhr.setRequestHeader(header, token);
+                    }
+                }).done(function(result){
+                    if(rsp.paid_amount === result.response.amount){
+                        var msg = '결제가 완료되었습니다. ';
+                        msg += '결제 금액 : ' + rsp.paid_amount;
+                        alert(msg);
 
-                    $.ajax({
-                        url      : url,
-                        type     : "POST",
-                        contentType : "application/json",
-                        data     : param,
-                        beforeSend : function(xhr){
-                            xhr.setRequestHeader(header, token);
-                        },
-                        dataType : "json",
-                        cache   : false,
-                        success  : function(result, status){
-                            alert("주문이 완료 되었습니다.");
-                            location.href='/orders';
-                        },
-                        error : function(jqXHR, status, error){
-                            if(jqXHR.status == '401'){
-                                alert('로그인 후 이용해주세요');
-                                location.href='/members/login';
-                            } else{
-                                alert(jqXHR.responseJSON.message);
+                        $.ajax({
+                            url      : '/cart/orders',
+                            type     : 'POST',
+                            contentType : "application/json",
+                            data     : param,
+                            beforeSend : function(xhr){
+                                xhr.setRequestHeader(header, token);
+                            },
+                            dataType : "json",
+                            cache   : false,
+                            success  : function(result, status){
+                                alert("주문이 완료 되었습니다.");
+                                location.href='/orders';
+                            },
+                            error : function(jqXHR, status, error){
+                                if(jqXHR.status == '401'){
+                                    alert('로그인 후 이용해주세요');
+                                    location.href='/members/login';
+                                } else{
+                                    alert(jqXHR.responseJSON.message);
+                                }
+
                             }
+                        });
+                    } else {
+                        var msg = '결제에 실패하였습니다.';
+                        msg += '에러내용 : ' + rsp.error_msg;
+                        alert(msg);
+                    }
+                })
+            });
+        }
 
-                        }
-                    });
+        function kgInicis() {
+            var token = $("meta[name='_csrf']").attr("content");
+            var header = $("meta[name='_csrf_header']").attr("content");
 
-                } else {
-                    var msg = '결제에 실패하였습니다.';
-                    msg += '에러내용 : ' + rsp.error_msg;
-                    alert(msg);
-                }
+            var dataList = new Array();
+            var paramData = new Object();
+
+            var orderTotalPrice = 0;
+            var name = $("#name").val();
+            var email = $("#email").val();
+            var phone = $("#phone").val();
+            var zipcode = $("#zipcode").val();
+            var address = $("#city").val();
+
+            $("input[name=cartChkBox]").each(function () {
+                var cartItemId = $(this).val();
+                var data = new Object();
+
+                var price = $("#price_" + cartItemId).attr("data-price");
+                var count = $("#count_" + cartItemId).val();
+                orderTotalPrice += price * count;
+
+                data["cartItemId"] = cartItemId;
+                dataList.push(data);
+            });
+
+            paramData['cartOrderDtoList'] = dataList;
+
+            var param = JSON.stringify(paramData);
+
+            var IMP = window.IMP;
+            IMP.init('imp84048403');
+            IMP.request_pay({
+                pg: 'html5_inicis',
+                pay_method: 'card',
+                merchant_uid: 'merchant_' + new Date().getTime(),
+                name: 'Shopping Mall',
+                amount: orderTotalPrice,
+                buyer_email: email,
+                buyer_name: name,
+                buyer_tel: phone,
+                buyer_addr: address,
+                buyer_postcode: zipcode,
+            }, function (rsp) {
+                console.log(rsp);
+                $.ajax({
+                    type: 'POST',
+                    url: '/verifyIamport/' + rsp.imp_uid,
+                    beforeSend: function(xhr){
+                        xhr.setRequestHeader(header, token);
+                    }
+                }).done(function(result){
+                    if(rsp.paid_amount === result.response.amount){
+                        var msg = '결제가 완료되었습니다. ';
+                        msg += '결제 금액 : ' + rsp.paid_amount;
+                        alert(msg);
+
+                        $.ajax({
+                            url      : '/cart/orders',
+                            type     : 'POST',
+                            contentType : "application/json",
+                            data     : param,
+                            beforeSend : function(xhr){
+                                xhr.setRequestHeader(header, token);
+                            },
+                            dataType : "json",
+                            cache   : false,
+                            success  : function(result, status){
+                                alert("주문이 완료 되었습니다.");
+                                location.href='/orders';
+                            },
+                            error : function(jqXHR, status, error){
+                                if(jqXHR.status == '401'){
+                                    alert('로그인 후 이용해주세요');
+                                    location.href='/members/login';
+                                } else{
+                                    alert(jqXHR.responseJSON.message);
+                                }
+
+                            }
+                        });
+                    } else {
+                        var msg = '결제에 실패하였습니다.';
+                        msg += '에러내용 : ' + rsp.error_msg;
+                        alert(msg);
+                    }
+                })
             });
         }
 
@@ -225,7 +338,7 @@
             <tbody>
                 <tr th:each="cartItem : ${cartItems}">
                     <td class="text-center align-middle">
-                        <input type="checkbox" name="cartChkBox" th:value="${cartItem.cartItemId}">
+                        <input type="checkbox" name="cartChkBox" th:value="${cartItem.cartItemId}" checked>
                     </td>
                     <td class="d-flex">
                         <div class="repImgDiv align-self-center">
@@ -281,8 +394,8 @@
                 <label th:for="zipcode">배송지</label>
             </div>
             <div class="form-group">
-                <input type="text" th:field="*{zipcode}" style="width: 40%; display: inline;" class="form-control" placeholder="우편번호" readonly="readonly">
-                <button id="zipcode" type="button" class="btn btn-light" onclick="execPostCode()">우편번호 찾기</button>
+                <input id="zipcode" type="text" th:field="*{zipcode}" style="width: 40%; display: inline;" class="form-control" placeholder="우편번호" readonly="readonly">
+                <button type="button" class="btn btn-light" onclick="execPostCode()">우편번호 찾기</button>
                 <p th:if="${#fields.hasErrors('zipcode')}" th:errors="*{zipcode}" class="fieldError">Incorrect data</p>
             </div>
             <div class="form-group">
@@ -300,14 +413,14 @@
             <fieldset>
                 <h3>결제수단 선택</h3>
                 <div>
-                    <input type="radio" id="contactChoice1" name="contact" value="email" />
-                    <label for="contactChoice1">신용카드</label>
+                    <input type="radio" id="credit_card" name="payment_method" value="credit_card">
+                    <label for="credit_card">신용카드</label>
 
-                    <input type="radio" id="kakaopay" name="contact" value="phone" />
+                    <input type="radio" id="kakaopay" name="payment_method" value="kakaopay" checked>
                     <label for="kakaopay">카카오페이</label>
 
-                    <input type="radio" id="contactChoice3" name="contact" value="mail" />
-                    <label for="contactChoice3">Paypal</label>
+                    <input type="radio" id="paypal" name="payment_method" value="paypal">
+                    <label for="paypal">Paypal</label>
                 </div>
             </fieldset>
         </div>
